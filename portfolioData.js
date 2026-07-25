@@ -1,0 +1,60 @@
+window.PORTFOLIO = {
+  email:"yan.zhu.7j@stu.hosei.ac.jp",
+  zh:{
+    name:"朱妍", role:"国际体育项目协调者 · 体育管理研究者 · 体育赛事运营者",
+    nav:["关于我","专业方向","经历","研究","教育","能力","联系我"],
+    heroTitle:"跨越语言与文化，<br>让体育项目真正落地。",
+    heroEn:"Creating the Value of Sport Across Borders.",
+    heroBody:"我专注于国际体育赛事、体育项目运营、体育消费者研究和跨文化沟通。通过大型国际赛事经验、体育活动执行经验以及数据分析能力，我希望连接人、组织与市场，让体育项目从构想到现场真正落地。",
+    tags:["国际体育赛事","体育项目运营","体育管理研究","数据分析","跨文化沟通"],
+    buttons:["查看我的经历","查看研究项目","联系我"],
+    aboutTitle:"关于我",aboutLead:"我希望不仅分析体育行业的问题，也真正进入现场，把项目推进并完成。",
+    about:["我来自中国，现居东京，就读于法政大学大学院体育与健康研究科体育管理方向。2027 年起计划进入博士阶段。","本科阶段学习土木工程管理，建立了项目管理、统计分析和组织协调基础。北京 2022 冬奥会成为我的职业转折点：我开始理解体育赛事是连接企业、组织、工作人员、观众和城市的复杂项目系统。","目前，我一方面研究体育消费者行为和体育旅游，另一方面持续参与包容性体育和地区体育项目运营。我的优势是把国际项目经验、研究与数据分析、多语言沟通和现场执行结合起来。"],
+    statLabels:["奥运合作伙伴","相关人员数据","雪场调查样本","工作语言"],stats:["13 家","2,000+","约 350","中 · 日 · 英"],
+    focusTitle:"核心专业方向",focus:[
+      ["01","国际体育赛事","熟悉国际赛事中的合作伙伴沟通、人员信息管理、多语言协调和项目推进。"],
+      ["02","体育项目运营","参与前期准备、现场执行、人员引导、竞赛辅助、裁判支持、计时和活动复盘。"],
+      ["03","体育研究与数据分析","能够完成问卷设计、实地调查、数据清理、统计分析和研究报告撰写。"],
+      ["04","跨文化沟通","使用中文、日语和英语，在不同文化、组织和利益相关者之间推动沟通。"]],
+    expTitle:"职业与项目经历", exp:[
+      {date:"2026.09 / PLANNED",title:"2026 爱知·名古屋亚运会",role:"国际体育大会运营、翻译与接待",body:"已获得参与资格，计划通过前期培训及现场工作，积累国际综合体育大会的会场运营、人员接待、参与者服务和项目执行经验。",status:"UPCOMING"},
+      {date:"2026.06 — NOW",title:"世界ゆるスポーツ協会",role:"体育活动运营实习生",body:"参与活动准备、物资确认、参与者接待、规则说明、裁判与计时辅助、工作坊运营、突发情况处理和复盘。关注参与者是否理解规则、感到安全并愿意再次参加。",status:"INTERNSHIP"},
+      {date:"2025 — NOW",title:"地区体育活动与小学生相扑大会",role:"现场运营与体育管理调研",body:"在长野县木曾町等地区活动中负责选手招集、人员与座位引导、流程辅助和动线管理，并提出家长区域、等待路线和低年级选手情绪支持等改善建议。",status:"FIELD"},
+      {date:"2021 — 2022",title:"北京 2022 冬季奥运会相关项目",role:"国际合作伙伴协调 · 人员信息与数据管理",body:"对接 13 家奥运合作伙伴企业，管理约 2,000 名相关人员的信息，协助 IOC、合作伙伴与赛事运营组织之间的信息传达、需求整理及项目进度推进。",status:"BEIJING 2022",bullets:["支持 13 家奥运合作伙伴企业","完成约 2,000 人信息整理与管理","在多组织、多语言环境中协调沟通"]}],
+    principle:"在解决问题之前，先理解问题背后的人。",
+    researchTitle:"研究：从数据理解体育消费者",researchName:"访日外国人雪上运动旅游中的感知风险与重游意愿研究",
+    researchEn:"Perceived Risk and Revisit Intention in Inbound Snow Sports Tourism in Japan",
+    researchBody:"研究外国游客在日本参与滑雪或单板滑雪时感受到的安全、语言、天气、装备与信息风险，以及这些因素如何影响其重游意愿，为滑雪场和体育旅游企业提出改善建议。",
+    researchStats:[["约 350","有效样本"],["2026.02","长野县现场调查"],["3","问卷语言"],["SEM","结构方程模型"]],
+    methods:["计划行为理论","技术接受模型","前景理论","Edgework Theory","问卷设计","数据清理","信效度分析","验证性因子分析","结构方程模型"],
+    tools:["SPSS","Mplus","Excel","Google Sheets"],
+    eduTitle:"教育经历",education:[["2025 — 2027.03","法政大学大学院","体育与健康研究科 · 体育管理 · 硕士","体育消费者行为、体育旅游、体育营销、国际体育赛事与统计分析"],["2019.09 — 2023.06","北方工业大学","土木工程管理 · Civil Engineering Management","项目管理、工程管理、统计学、成本与进度管理、数据分析及风险管理"]],
+    skillsTitle:"专业能力",skills:[["赛事与活动运营","国际赛事运营","现场执行","人员引导","竞赛流程","裁判与计时","复盘与改善"],["项目管理","进度跟进","多方协调","需求整理","信息管理","风险识别","现场问题处理"],["研究与数据","问卷设计","定量研究","数据清理","CFA / SEM","文献综述","报告撰写"],["跨文化沟通","中文母语","日语 N1 / 商务沟通","英语 TOEIC 800","国际参与者支持"]],
+    contactTitle:"让我们一起，让体育项目真正落地。",contactBody:"欢迎联系我讨论体育赛事、项目运营、体育研究及中日体育行业合作。",opportunities:["体育行业实习与工作","国际体育项目","体育研究合作","中日体育项目合作"],
+    form:["姓名","公司或组织","邮箱","联系主题","留言内容","发送邮件"],footer:"International Sports Project Coordinator · Tokyo"
+  },
+  ja:{
+    name:"朱妍（シュケン）",role:"国際スポーツプロジェクトコーディネーター · スポーツマネジメント研究者 · イベント運営",
+    nav:["私について","専門領域","経験","研究","学歴","スキル","連絡"],heroTitle:"言語と文化を越え、<br>スポーツプロジェクトを現場へ。",heroEn:"Creating the Value of Sport Across Borders.",heroBody:"国際スポーツ大会、プロジェクト運営、スポーツ消費者研究、異文化コミュニケーションに取り組んでいます。大会経験、現場運営、データ分析を通じ、人・組織・市場をつなぎます。",tags:["国際スポーツ大会","プロジェクト運営","スポーツ研究","データ分析","異文化コミュニケーション"],buttons:["経験を見る","研究を見る","お問い合わせ"],
+    aboutTitle:"私について",aboutLead:"課題を分析するだけでなく、現場に入り、関係者と共にプロジェクトを実現します。",about:["中国出身、東京在住。法政大学大学院スポーツ健康学研究科でスポーツマネジメントを専攻し、2027年から博士課程進学を予定しています。","学部では土木工程管理を学び、プロジェクト管理、統計分析、組織調整の基礎を身につけました。北京2022を機に、スポーツ業界を長期的なキャリアとして選びました。","現在はスポーツ消費者行動とツーリズムを研究しながら、インクルーシブスポーツや地域スポーツの現場運営に参加しています。"],
+    statLabels:["オリンピックパートナー","関係者データ","調査サンプル","使用言語"],stats:["13社","2,000+","約350","中 · 日 · 英"],
+    focusTitle:"専門領域",focus:[["01","国際スポーツ大会","パートナー対応、関係者情報管理、多言語調整、プロジェクト推進。"],["02","スポーツ運営","準備、現場実施、誘導、競技補助、審判・計時、振り返り。"],["03","研究・データ分析","質問紙設計、現地調査、データ整備、統計分析、研究報告。"],["04","異文化コミュニケーション","中国語・日本語・英語で組織とステークホルダーをつなぐ。"]],
+    expTitle:"実務・プロジェクト経験",exp:[{date:"2026.09 / 予定",title:"愛知・名古屋2026アジア競技大会",role:"大会運営・通訳・接遇",body:"参加資格を取得。研修と大会現場を通じ、会場運営、参加者サービス、国際大会の実行経験を積む予定です。",status:"UPCOMING"},{date:"2026.06 — 現在",title:"世界ゆるスポーツ協会",role:"イベント運営インターン",body:"準備、物品確認、参加者対応、ルール説明、審判・計時補助、ワークショップ、現場対応、振り返りに参加しています。",status:"INTERNSHIP"},{date:"2025 — 現在",title:"地域スポーツ・小学生相撲大会",role:"現場運営・調査",body:"長野県木曽町などで選手招集、誘導、競技進行、動線管理を担当し、観戦区域や低学年選手の感情支援などを提案しました。",status:"FIELD"},{date:"2021 — 2022",title:"北京2022冬季オリンピック関連プロジェクト",role:"国際パートナー調整 · 人員データ管理",body:"13社のオリンピックパートナーと連携し、約2,000名の情報を管理。IOC、企業、運営組織間の情報伝達と進行を支援しました。",status:"BEIJING 2022",bullets:["パートナー13社を支援","約2,000名のデータ管理","多組織・多言語環境での調整"]}],
+    principle:"問題を解決する前に、その背景にいる人を理解する。",researchTitle:"研究：データからスポーツ消費者を理解する",researchName:"訪日外国人のスノースポーツ観光における知覚リスクと再訪意向",researchEn:"Perceived Risk and Revisit Intention in Inbound Snow Sports Tourism in Japan",researchBody:"安全、言語、天候、用具、情報に関するリスク認知が再訪意向に与える影響を分析し、スキー場とスポーツツーリズム事業者への提言を目指します。",researchStats:[["約350","有効回答"],["2026.02","長野県現地調査"],["3","調査言語"],["SEM","構造方程式モデル"]],methods:["計画的行動理論","技術受容モデル","プロスペクト理論","Edgework Theory","質問紙設計","データクリーニング","信頼性・妥当性","CFA","SEM"],tools:["SPSS","Mplus","Excel","Google Sheets"],
+    eduTitle:"学歴",education:[["2025 — 2027.03","法政大学大学院","スポーツ健康学研究科 · スポーツマネジメント · 修士","スポーツ消費者行動、ツーリズム、マーケティング、国際大会、統計分析"],["2019.09 — 2023.06","北方工業大学","土木工程管理","プロジェクト管理、統計学、コスト・工程管理、データ分析、リスク管理"]],
+    skillsTitle:"専門スキル",skills:[["大会・イベント運営","国際大会","現場実施","誘導","競技進行","審判・計時","改善提案"],["プロジェクト管理","進捗管理","多者間調整","要件整理","情報管理","リスク特定"],["研究・データ","質問紙設計","定量研究","データ整備","CFA / SEM","報告書"],["異文化対応","中国語母語","日本語N1・ビジネス","英語TOEIC 800","国際参加者支援"]],
+    contactTitle:"スポーツプロジェクトを、一緒に現場へ。",contactBody:"大会運営、スポーツ研究、日中スポーツ協力についてお気軽にご連絡ください。",opportunities:["スポーツ業界の仕事・インターン","国際スポーツプロジェクト","共同研究","日中スポーツ協力"],form:["氏名","会社・組織","メール","件名","メッセージ","メールを送る"],footer:"International Sports Project Coordinator · Tokyo"
+  },
+  en:{
+    name:"Yan Zhu",role:"International Sports Project Coordinator · Sport Management Researcher · Event Operations Professional",
+    nav:["About","Focus","Experience","Research","Education","Skills","Contact"],heroTitle:"Creating the Value of Sport<br>Across Borders.",heroEn:"SPORT × RESEARCH × FIELD",heroBody:"I connect people, organizations, and markets through international sport event experience, field operations, consumer research, data analysis, and cross-cultural communication.",tags:["International events","Project operations","Sport research","Data analysis","Cross-cultural communication"],buttons:["View experience","View research","Contact me"],
+    aboutTitle:"About me",aboutLead:"I do not only analyze problems in sport. I enter the field, collaborate, and move projects to completion.",about:["Originally from China and based in Tokyo, I am a second-year master’s student in Sport and Health Studies at Hosei University, specializing in sport management. I plan to begin doctoral study in 2027.","My undergraduate background in Civil Engineering Management built a foundation in project management, statistics, risk, and organizational coordination. Beijing 2022 became the turning point that led me to pursue sport as a long-term career.","Today I combine sport consumer and tourism research with hands-on operations in inclusive and community sport."],
+    statLabels:["Olympic partners","Personnel records","Survey sample","Working languages"],stats:["13","2,000+","≈350","ZH · JA · EN"],
+    focusTitle:"Core focus",focus:[["01","International sport events","Partner communication, personnel information, multilingual coordination, and project delivery."],["02","Sport project operations","Preparation, field execution, participant guidance, competition support, officiating, timing, and review."],["03","Research & data analysis","Questionnaire design, fieldwork, data cleaning, statistical analysis, and reporting."],["04","Cross-cultural communication","Connecting needs across cultures, organizations, and stakeholders in Chinese, Japanese, and English."]],
+    expTitle:"Experience & projects",exp:[{date:"SEP 2026 / PLANNED",title:"Aichi-Nagoya 2026 Asian Games",role:"International event operations, interpretation & reception",body:"Selected to participate. I plan to build further experience in venue operations, participant service, reception, and international event delivery.",status:"UPCOMING"},{date:"JUN 2026 — NOW",title:"World Yuru Sports Association",role:"Sport Event Operations Intern",body:"Supporting preparation, equipment checks, participant service, rule briefing, officiating and timing, workshops, incident response, and post-event review.",status:"INTERNSHIP"},{date:"2025 — NOW",title:"Community Sport & Youth Sumo Events",role:"Field Operations & Research",body:"Supporting athlete calls, participant flow, competition processes, seating, and movement at events including a youth sumo tournament in Kiso, Nagano; proposing experience improvements.",status:"FIELD"},{date:"2021 — 2022",title:"Beijing 2022 Winter Olympic Games Project",role:"International Partner Coordination · Personnel Data",body:"Coordinated with 13 Olympic partner companies and managed information for approximately 2,000 people, supporting communication and delivery across the IOC, partners, and operations teams.",status:"BEIJING 2022",bullets:["Supported 13 Olympic partners","Managed ≈2,000 personnel records","Delivered in a multilingual, multi-organization environment"]}],
+    principle:"Before solving the problem, understand the person behind it.",researchTitle:"Research: understanding sport consumers through data",researchName:"Perceived Risk and Revisit Intention in Inbound Snow Sports Tourism in Japan",researchEn:"MASTER’S RESEARCH · HOSEI UNIVERSITY",researchBody:"This study examines how safety, language, weather, equipment, and information risks shape revisit intention among international ski and snowboard tourists, with practical recommendations for Japanese resorts and sport tourism businesses.",researchStats:[["≈350","Valid responses"],["FEB 2026","Nagano fieldwork"],["3","Survey languages"],["SEM","Structural model"]],methods:["Theory of Planned Behavior","Technology Acceptance Model","Prospect Theory","Edgework Theory","Questionnaire design","Data cleaning","Reliability & validity","CFA","SEM"],tools:["SPSS","Mplus","Excel","Google Sheets"],
+    eduTitle:"Education",education:[["2025 — MAR 2027","Hosei University Graduate School","M.A., Sport and Health Studies · Sport Management","Sport consumer behavior, tourism, marketing, international events, and statistics"],["SEP 2019 — JUN 2023","North China University of Technology","B.A., Civil Engineering Management","Project management, statistics, cost and schedule, data analysis, and risk management"]],
+    skillsTitle:"Professional capabilities",skills:[["Event operations","International events","Field execution","Guidance","Competition flow","Officiating & timing","Review"],["Project management","Progress tracking","Stakeholder coordination","Requirements","Information","Risk identification"],["Research & data","Questionnaires","Quantitative research","Data cleaning","CFA / SEM","Reporting"],["Cross-cultural","Native Chinese","Japanese N1 / business","English TOEIC 800","International support"]],
+    contactTitle:"Let’s move sport projects from idea to field.",contactBody:"I welcome conversations about sport events, project operations, research, and China–Japan sport collaboration.",opportunities:["Sport industry roles & internships","International sport projects","Research collaboration","China–Japan sport partnerships"],form:["Name","Company or organization","Email","Subject","Message","Open email"],footer:"International Sports Project Coordinator · Tokyo"
+  }
+};
