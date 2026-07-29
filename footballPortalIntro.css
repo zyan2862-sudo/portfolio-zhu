@@ -1,0 +1,54 @@
+:root{--fi-gold:#d8b56a;--fi-ink:#02070b}
+html.intro-locked,body.intro-active{overflow:hidden}
+body.intro-active>header,body.intro-active>main,body.intro-active>footer{pointer-events:none}
+.football-intro{position:fixed;inset:0;z-index:9999;overflow:hidden;color:#fff;background:transparent;font-family:Arial,"Noto Sans SC",sans-serif;isolation:isolate}
+.football-intro[hidden]{display:none}
+.fi-mask-defs{position:absolute}
+.fi-curtain{position:absolute;inset:-1px;background:var(--fi-ink);-webkit-mask:url(#fi-curtain-mask);mask:url(#fi-curtain-mask);will-change:mask}
+.fi-scene,.fi-wide-bg,.fi-wide-lights,.fi-close-bg,.fi-close-lit,.fi-close-lights{position:absolute;inset:0}
+.fi-scene{overflow:hidden}
+.fi-wide-bg,.fi-close-bg,.fi-close-lit{background-position:center;background-size:cover;background-repeat:no-repeat}
+.fi-wide-bg{background-image:linear-gradient(180deg,rgba(1,6,10,.08),rgba(1,6,10,.18)),url("public/images/intro/stadium-dark-background.webp")}
+.fi-wide-lights{background:url("public/images/intro/stadium-lights-overlay.png") center/cover no-repeat;opacity:.05;mix-blend-mode:screen}
+.fi-wide-copy{position:absolute;left:clamp(22px,4vw,68px);top:clamp(26px,5vh,58px);z-index:3;text-transform:uppercase;letter-spacing:.18em}
+.fi-wide-copy p{margin:0 0 8px;color:var(--fi-gold);font:600 clamp(10px,1vw,13px)/1.3 ui-monospace,monospace}
+.fi-wide-copy span{color:rgba(255,255,255,.64);font-size:clamp(10px,.9vw,12px)}
+.fi-ball-wrap{position:absolute;left:var(--ball-x,50%);top:var(--ball-y,76%);width:var(--ball-size,152px);aspect-ratio:1;transform:translate(-50%,-50%);z-index:7;will-change:left,top,transform,opacity}
+.fi-ball{position:absolute;inset:0;border:0;padding:0;background:transparent;cursor:pointer;border-radius:50%;filter:drop-shadow(0 15px 20px rgba(0,0,0,.5));transition:filter .35s ease,transform .3s ease}
+.fi-football-visual{--light-x:42%;--light-y:30%;--light-opacity:0;--ball-rx:0deg;--ball-ry:0deg;--ball-scale:1;position:absolute;inset:0;display:block;border-radius:50%;transform:perspective(700px) rotateX(var(--ball-rx)) rotateY(var(--ball-ry)) scale(var(--ball-scale));transform-style:preserve-3d;will-change:transform}
+.fi-football-image{width:100%;height:100%;object-fit:contain;display:block}
+.football-highlight{position:absolute;inset:0;display:block;pointer-events:none;opacity:var(--light-opacity);background:radial-gradient(circle at var(--light-x) var(--light-y),rgba(255,255,255,.58) 0%,rgba(255,244,218,.25) 18%,rgba(255,255,255,.08) 35%,transparent 58%);mix-blend-mode:screen;-webkit-mask:url("public/images/intro/football.png") center/contain no-repeat;mask:url("public/images/intro/football.png") center/contain no-repeat;will-change:opacity,background}
+.fi-shadow{--shadow-x:0px;--shadow-y:0px;--shadow-scale:.82;--shadow-opacity:.42;position:absolute;left:2%;top:71%;width:96%;height:38%;object-fit:contain;opacity:var(--shadow-opacity);transform:translate(var(--shadow-x),var(--shadow-y)) scaleX(var(--shadow-scale));pointer-events:none;will-change:transform,opacity}
+.fi-particles{position:absolute;left:-38%;top:20%;width:176%;opacity:0;pointer-events:none}
+.fi-ball-ring{position:absolute;inset:-11%;border:1px solid rgba(216,181,106,.68);border-radius:50%;opacity:0;transform:scale(.82);transition:.35s ease}
+.fi-ball-hint{position:absolute;top:112%;left:50%;transform:translateX(-50%);white-space:nowrap;color:rgba(255,255,255,.6);font:500 10px/1 ui-monospace,monospace;letter-spacing:.22em;opacity:.82}
+.fi-ball-wrap:hover .fi-ball,.fi-ball-wrap.is-hover .fi-ball{filter:drop-shadow(0 15px 20px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(216,181,106,.22))}
+.fi-ball-wrap:hover .fi-ball-ring,.fi-ball-wrap.is-hover .fi-ball-ring{opacity:1;transform:scale(1)}
+.fi-close-scene{opacity:0;visibility:hidden;background:#02070b}
+.fi-close-bg{background-image:linear-gradient(180deg,rgba(1,6,10,.12),rgba(1,6,10,.1)),url("public/images/intro/pitch-goal-background.webp")}
+.fi-close-lit{background-image:url("public/images/intro/stadium-lit-background.webp");opacity:0}
+.fi-close-lights{background:url("public/images/intro/stadium-lights-overlay.png") center/cover no-repeat;opacity:0;mix-blend-mode:screen}
+.fi-close-goal{position:absolute;left:var(--goal-x,50%);top:var(--goal-y,57%);width:var(--goal-width,68vw);height:var(--goal-height,46vh);transform:translate(-50%,-50%);pointer-events:none;z-index:4}
+.fi-close-goal>img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;opacity:0}
+.fi-close-frame{z-index:6}.fi-close-net{z-index:5}.fi-close-portal{z-index:3;object-fit:contain!important;filter:saturate(.25)}
+.fi-goal-opening{position:absolute;left:8%;right:8%;top:10%;bottom:11%;border:1px dashed transparent;z-index:2}
+.fi-skip,.fi-fallback{position:absolute;z-index:10000;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.76);background:rgba(2,7,11,.45);backdrop-filter:blur(8px);padding:10px 14px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.16em;cursor:pointer}
+.fi-skip{right:18px;top:18px}.fi-fallback{left:50%;bottom:28px;transform:translateX(-50%);display:none}
+.fi-debug{position:fixed;right:12px;top:58px;z-index:10020;width:min(320px,calc(100vw - 24px));max-height:calc(100vh - 70px);overflow:auto;padding:12px;background:rgba(4,11,17,.94);border:1px solid rgba(216,181,106,.38);font:11px/1.3 ui-monospace,monospace}
+.fi-debug>div:first-child{display:flex;justify-content:space-between;color:var(--fi-gold)}.fi-debug-actions{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+.fi-debug button{background:#18242c;border:1px solid #43515a;color:#fff;padding:5px 7px}.fi-debug label{display:grid;grid-template-columns:86px 1fr;gap:6px;align-items:center;margin:5px 0}.fi-debug input[type=range]{width:100%}
+.football-intro.fi-show-bounds .fi-close-goal{outline:1px solid #ffbc36}.football-intro.fi-show-bounds .fi-goal-opening{border-color:#7cffcb}.football-intro.fi-show-bounds .fi-ball-wrap{outline:1px solid #5edcff}
+.football-intro[data-phase="loading"] .fi-ball-wrap{opacity:0}
+.football-intro[data-phase="press"] .fi-ball{transform:scale(.88)}.football-intro[data-phase="press"] .fi-particles,.football-intro[data-phase="launch"] .fi-particles{opacity:.85}
+.football-intro[data-phase="cameraPush"] .fi-wide-scene,.football-intro[data-phase="impact"] .fi-wide-scene,.football-intro[data-phase="lighting"] .fi-wide-scene,.football-intro[data-phase="portal"] .fi-wide-scene,.football-intro[data-phase="entering"] .fi-wide-scene{opacity:0}
+.football-intro[data-phase="cameraPush"] .fi-close-scene,.football-intro[data-phase="impact"] .fi-close-scene,.football-intro[data-phase="lighting"] .fi-close-scene,.football-intro[data-phase="portal"] .fi-close-scene,.football-intro[data-phase="entering"] .fi-close-scene{opacity:1;visibility:visible}
+@media(max-width:700px){
+ .fi-wide-bg{background-image:linear-gradient(180deg,rgba(1,6,10,.08),rgba(1,6,10,.18)),url("public/images/intro/stadium-dark-background.webp");background-position:center}
+ .fi-close-bg{background-image:url("public/images/intro/pitch-goal-mobile.webp")}
+ .fi-wide-copy{top:24px}.fi-close-goal{width:var(--goal-width,92vw);height:var(--goal-height,42vh)}
+ .fi-ball-hint{top:116%}
+}
+@media(prefers-reduced-motion:reduce){
+ .fi-ball,.fi-ball-ring{transition:none!important}.fi-wide-lights{opacity:.3}.fi-ball-hint{opacity:1}
+  .fi-football-visual{transform:none!important}
+}
