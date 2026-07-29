@@ -6,14 +6,248 @@
   <meta property="og:title" content="Yan Zhu | Sport × Research × Field">
   <meta property="og:description" content="Creating the value of sport across borders.">
   <meta property="og:image" content="assets/og-sport-portfolio.png">
+  <meta name="theme-color" content="#03101f">
   <title>Yan Zhu | Sport × Research × Field</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="portfolioData.js" defer></script><script src="app.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260729-63">
+  <link rel="stylesheet" href="dist/lanyard/lanyard.css?v=20260729-63">
+  <script src="portfolioData.js?v=20260729-60" defer></script><script src="researchSceneData.js" defer></script><script src="app.js?v=20260729-60" defer></script>
+  <style>
+    main>.section{border-top:0!important}
+    .profile-framework{padding-top:32px!important}
+    .profile-framework .sport-hifi-stage{margin-top:24px!important}
+    .profile-framework .skills-section-index{top:-28px!important;z-index:12!important}
+    .profile-framework .skills-section-index::after{position:absolute!important;left:0!important;top:34px!important;margin:0!important}
+    @media(max-width:767px){
+      .profile-framework{padding-top:24px!important}
+      .profile-framework .sport-hifi-stage{margin-top:20px!important}
+      .profile-framework .skills-section-index{top:-20px!important}
+      .profile-framework .skills-section-index::after{top:32px!important}
+    }
+    #contact .contact-display-en,
+    #contact .contact-subtitle,
+    #contact .contact-person-icon,
+    #contact .contact-person small{display:none!important}
+    #contact .contact-main-title{
+      display:block!important;
+      white-space:nowrap!important;
+      color:#082c5b!important;
+      font-family:var(--font-display,sans-serif)!important;
+      font-size:clamp(48px,5.6vw,82px)!important;
+      font-weight:600!important;
+      letter-spacing:-.045em!important;
+      text-shadow:2px 0 rgba(47,130,255,.18),-1px 0 rgba(255,47,168,.12)
+    }
+    #contact .contact-copy-panel{position:relative}
+    #contact .contact-shell{
+      width:min(1100px,calc(100% - 96px))!important;
+      grid-template-columns:minmax(390px,.88fr) minmax(470px,1.12fr)!important;
+      gap:54px!important
+    }
+    #contact .contact-copy-panel{
+      width:min(100%,520px)!important;
+      padding:36px 0!important
+    }
+    #contact .contact-copy-panel::before{
+      content:"CONTACT // LINK ESTABLISHED";
+      display:block;
+      width:max-content;
+      margin:0 0 22px;
+      color:#438bcf;
+      font:600 9px/1 var(--font-mono,monospace);
+      letter-spacing:.18em
+    }
+    #contact .contact-person,
+    #contact .contact-copy,
+    #contact .contact-method>a{
+      position:relative!important;
+      overflow:hidden!important;
+      border:1px solid rgba(47,130,255,.42)!important;
+      background:
+        linear-gradient(90deg,rgba(47,130,255,.055) 1px,transparent 1px),
+        linear-gradient(rgba(47,130,255,.045) 1px,transparent 1px),
+        linear-gradient(135deg,rgba(255,255,255,.92),rgba(231,243,255,.76))!important;
+      background-size:28px 28px,28px 28px,auto!important;
+      box-shadow:
+        inset 3px 0 #55b8ff,
+        inset -3px 0 rgba(255,47,168,.58),
+        0 10px 30px rgba(35,104,184,.12)!important;
+      clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 14px,100% calc(100% - 14px),calc(100% - 14px) 100%,14px 100%,0 calc(100% - 14px),0 14px)!important
+    }
+    #contact .contact-person{
+      display:block!important;
+      margin-top:34px!important;
+      margin-bottom:20px!important;
+      padding:20px 23px!important;
+      border-top-color:#55b8ff!important
+    }
+    #contact .contact-person-copy{
+      display:grid!important;
+      grid-template-columns:1fr!important;
+      gap:5px!important
+    }
+    #contact .contact-person strong{
+      color:#081d3c!important;
+      font-family:var(--font-display,sans-serif)!important;
+      font-weight:600!important
+    }
+    #contact .contact-person em,
+    #contact .contact-person b{
+      display:block!important;
+      color:#426486!important;
+      font-family:var(--font-body-zh,sans-serif)!important
+    }
+    #contact .contact-copy::after,
+    #contact .contact-method>a::after,
+    #contact .contact-person::after{
+      content:"";
+      position:absolute;
+      top:0;
+      right:18px;
+      width:72px;
+      height:2px;
+      background:linear-gradient(90deg,#54b8ff,#ff2fa8);
+      box-shadow:0 0 9px rgba(80,171,255,.45)
+    }
+    #contact .contact-copy small{
+      color:#287bc8!important;
+      font-family:var(--font-mono,monospace)!important;
+      letter-spacing:.18em!important
+    }
+    #contact .contact-copy strong{
+      color:#0a2e5c!important;
+      font-family:var(--font-body-en,sans-serif)!important;
+      font-weight:500!important
+    }
+    #contact .contact-copy-action,
+    #contact .contact-method>a{color:#237fd6!important}
+    #contact .contact-methods{gap:14px!important}
+    #contact .contact-method{gap:10px!important}
+    #contact .contact-copy,
+    #contact .contact-method>a{min-height:76px!important}
+    #contact .contact-copy:hover,
+    #contact .contact-method>a:hover{
+      transform:translateY(-2px);
+      border-color:#55b8ff!important;
+      box-shadow:inset 3px 0 #55b8ff,inset -3px 0 #ff2fa8,0 14px 34px rgba(40,116,201,.18)!important
+    }
+    #contact .contact-status span{
+      border-radius:0!important;
+      clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+      color:#2679c3!important;
+      background:rgba(242,249,255,.64)!important;
+      border-color:rgba(47,130,255,.38)!important
+    }
+    #contact .contact-status{
+      margin-top:22px!important;
+      gap:12px!important
+    }
+    @media(max-width:900px){
+      #contact .contact-shell{
+        width:min(680px,calc(100% - 36px))!important;
+        grid-template-columns:1fr!important;
+        gap:24px!important
+      }
+      #contact .contact-copy-panel{width:100%!important}
+    }
+    @media(max-width:600px){
+      #contact .contact-shell{width:calc(100% - 24px)!important}
+      #contact .contact-copy-panel{padding-top:24px!important}
+      #contact .contact-person{margin-top:24px!important}
+    }
+    /* Contact final composition: compact copy, intrinsic video ratio, lifted stage */
+    #contact.contact{
+      background-position:center center!important;
+      background-size:cover!important
+    }
+    #contact .contact-shell{
+      width:min(1040px,calc(100% - 80px))!important;
+      grid-template-columns:minmax(350px,450px) minmax(430px,1fr)!important;
+      gap:42px!important;
+      padding-top:34px!important;
+      padding-bottom:24px!important;
+      transform:translateY(-38px)
+    }
+    #contact .contact-copy-panel{width:min(100%,450px)!important}
+    #contact .contact-character-stage{min-height:600px!important}
+    #contact .contact-character-follow{
+      width:158.4%!important;
+      height:auto!important;
+      align-items:center!important;
+      transform:translate(76px,-56px)!important
+    }
+    #contact .contact-character-float{
+      width:min(760px,132%)!important;
+      height:auto!important;
+      aspect-ratio:auto!important;
+      transform:translateY(-132px)!important
+    }
+    #contact .contact-character-video-wrap{
+      width:158.4%!important;
+      height:auto!important;
+      aspect-ratio:auto!important
+    }
+    #contact .contact-character-video{
+      display:block!important;
+      width:100%!important;
+      height:auto!important;
+      object-fit:contain!important;
+      object-position:center!important;
+      transform:scale(1.2)!important;
+      transform-origin:center center!important
+    }
+    @media(max-width:900px){
+      #contact .contact-shell{
+        width:min(660px,calc(100% - 36px))!important;
+        transform:translateY(-22px)
+      }
+      #contact .contact-copy-panel{width:min(100%,500px)!important}
+      #contact .contact-character-float{
+        width:min(620px,112%)!important;
+        transform:translateY(-72px)!important
+      }
+      #contact .contact-character-follow{
+        width:112%!important;
+        transform:translate(48px,-72px)!important
+      }
+    }
+    @media(max-width:600px){
+      #contact .contact-shell{transform:none}
+      #contact .contact-character-float{
+        width:min(500px,114%)!important;
+        transform:translateY(-40px)!important
+      }
+      #contact .contact-character-follow{
+        width:114%!important;
+        transform:translate(32px,-40px)!important
+      }
+    }
+    /* Shorter Contact stage: preserve the source image ratio instead of stretching it */
+    #contact.contact{
+      height:clamp(760px,88svh,920px)!important;
+      min-height:760px!important;
+      padding-top:0!important;
+      padding-bottom:0!important;
+      background-position:center bottom!important;
+      background-size:cover!important
+    }
+    #contact .contact-shell{
+      min-height:100%!important
+    }
+    #contact .contact-copy-panel::before{display:block!important}
+    #contact .contact-eyebrow{display:block!important}
+    #contact .contact-copy-panel h2{display:flex!important}
+    #contact .contact-copy-panel{
+      padding:36px 0!important;
+      align-self:auto!important;
+      transform:none!important
+    }
+    #contact .contact-person{margin-top:34px!important}
+  </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="Home">YZ<span>27</span></a>
+    <a class="brand" href="#top" aria-label="Home"><span class="brand-mark">Z</span><span class="brand-copy"><b>ZHUYAN</b><small>SPORTS MARKETING</small></span></a>
     <button class="menu" aria-label="Toggle menu" aria-expanded="false">MENU</button>
     <nav aria-label="Primary navigation"></nav>
     <div class="tools">
@@ -22,15 +256,85 @@
     </div>
   </header>
   <main id="main">
-    <section class="hero" id="top"><div class="hero-content"></div><div class="hero-board" aria-hidden="true"><span>FIELD / 27</span><b>YZ</b><i></i><div class="data-line">TOKYO — BEIJING — NAGANO — AICHI</div></div></section>
+    <section class="hero hero-video-intro" id="top">
+      <div class="hero-video-stage" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" tabindex="-1">
+          <source src="videos/cyber-sports-control-room.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-system-boot" aria-hidden="true">
+        <span class="hero-boot-scan"></span>
+        <div class="hero-boot-messages">
+          <p>INITIALIZING SPORTS SYSTEM...</p>
+          <p>CONNECTING FIELD DATA...</p>
+          <p><i></i>SPORTS SYSTEM ONLINE</p>
+        </div>
+      </div>
+      <div class="hero-react-lanyard" id="heroLanyardReact" aria-label="Interactive message board">
+        <button class="hero-lanyard-fallback" type="button" aria-haspopup="dialog" aria-controls="heroMessageDialog" onclick="window.dispatchEvent(new CustomEvent('hero-lanyard-message'))">
+          <img src="images/message-board-lanyard.png" alt="留言板">
+        </button>
+      </div>
+      <div class="hero-video-hud" aria-hidden="true"><i></i><i></i><span></span></div>
+      <div class="hero-content"></div>
+      <a class="hero-scroll" href="#about">SCROLL TO EXPLORE ↓</a>
+      <dialog class="hero-message-dialog" id="heroMessageDialog">
+        <form class="hero-message-form" action="https://formsubmit.co/zyan2862@gmail.com" method="POST">
+          <button class="hero-message-close" type="button" aria-label="Close">×</button>
+          <small>DIRECT MESSAGE // SECURE LINK</small>
+          <h2 data-message-title>给我留言</h2>
+          <label><span data-message-name>你的名字</span><input name="name" autocomplete="name" required></label>
+          <label><span data-message-email>你的邮箱</span><input name="email" type="email" autocomplete="email" required></label>
+          <label><span data-message-message>留言内容</span><textarea name="message" rows="5" required></textarea></label>
+          <input name="_subject" type="hidden" value="Portfolio message">
+          <button class="hero-message-submit" type="submit" data-message-send>发送留言</button>
+          <p class="hero-message-status" role="status" aria-live="polite"></p>
+        </form>
+      </dialog>
+    </section>
+    <div class="sport-ticker" aria-label="Sport profile">
+      <div><span>LIVE SPORT</span><b>FIELD OPERATIONS</b><span>FAN EXPERIENCE</span><b>SPORT RESEARCH</b><span>SNOW TOURISM</span><b>CHINA ↔ JAPAN</b></div>
+    </div>
+    <section class="sport-reel" aria-label="Sports field highlights">
+      <p>SPORT IS NOT A BACKDROP. IT IS THE FIELD I ENTER.</p>
+      <div class="sport-reel-track">
+        <div class="sport-reel-row" data-direction="right">
+          <figure><img src="images/reel-snowboard.jpg" alt="个人雪上运动经历" loading="lazy"></figure>
+          <figure><img src="images/reel-rugby-stadium.jpg" alt="橄榄球比赛现场观赛" loading="lazy"></figure>
+          <figure><img src="images/reel-volleyball-arena.jpg" alt="大型排球比赛场馆现场" loading="lazy"></figure>
+          <figure><img src="images/reel-baseball-scoreboard.jpg" alt="大学棒球比赛现场" loading="lazy"></figure>
+          <figure><img src="images/reel-beijing-portrait.jpg" alt="北京2022工作纪念照片" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-snowboard.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-rugby-stadium.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-volleyball-arena.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-baseball-scoreboard.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-beijing-portrait.jpg" alt="" loading="lazy"></figure>
+        </div>
+        <div class="sport-reel-row" data-direction="left">
+          <figure><img src="images/reel-mountain-portrait.jpg" alt="户外运动中的个人照片" loading="lazy"></figure>
+          <figure><img src="images/reel-sumo-staff.jpg" alt="相扑大会工作人员证件" loading="lazy"></figure>
+          <figure><img src="images/reel-volleyball-crowd.jpg" alt="排球比赛观众席现场" loading="lazy"></figure>
+          <figure><img src="images/reel-research-presentation.jpg" alt="雪上运动旅游研究中期发表" loading="lazy"></figure>
+          <figure><img src="images/reel-stadium-portrait.jpg" alt="东京体育场馆现场" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-mountain-portrait.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-sumo-staff.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-volleyball-crowd.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-research-presentation.jpg" alt="" loading="lazy"></figure>
+          <figure aria-hidden="true"><img src="images/reel-stadium-portrait.jpg" alt="" loading="lazy"></figure>
+        </div>
+      </div>
+    </section>
     <section id="about" class="section reveal"></section>
-    <section id="focus" class="section ink reveal"></section>
     <section id="experience" class="section reveal"></section>
+    <section id="projects" class="section projects-showcase reveal"></section>
     <section id="research" class="section blue reveal"></section>
-    <section id="education" class="section reveal"></section>
-    <section id="skills" class="section soft reveal"></section>
+    <section id="profile-framework" class="section profile-framework reveal">
+      <div class="profile-framework-head"></div>
+      <div id="skills" class="profile-framework-grid"></div>
+    </section>
     <section id="contact" class="section contact reveal"></section>
   </main>
   <footer></footer>
+  <script type="module" src="dist/lanyard/lanyard.js?v=20260729-63"></script>
 </body>
 </html>

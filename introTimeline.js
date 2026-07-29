@@ -1,0 +1,27 @@
+window.STADIUM_INTRO_TIMELINE={
+  enabled:true,
+  maxLoadWait:3000,
+  desktop:{approach:5000,crossfadeAt:2800,readyDelay:350},
+  mobile:{approach:3000,crossfadeAt:1600,readyDelay:220},
+  reduced:{approach:350,crossfadeAt:0,readyDelay:80},
+  kickFrames:[
+    {src:"public/images/intro/child-idle-clean.png",duration:140},
+    {src:"public/images/intro/child-idle-clean.png",duration:180},
+    {src:"public/images/intro/child-idle-clean.png",duration:220},
+    {src:"public/images/intro/child-idle-clean.png",duration:100,contact:true},
+    {src:"public/images/intro/child-idle-clean.png",duration:220},
+    {src:"public/images/intro/child-idle-clean.png",duration:260}
+  ],
+  ballFlight:{duration:940,controlX:.58,controlY:-.34,endX:.505,endY:.365,endScale:.22,rotations:2.1},
+  net:{impact:155,release:330},
+  reveal:{duration:1250},
+  assets:[
+    "public/images/intro/stadium-background.webp",
+    "public/images/intro/pitch-goal-background.webp",
+    "public/images/intro/crowd-foreground.png","public/images/intro/child-idle-clean.png",
+    "public/images/intro/football.png","public/images/intro/football-shadow.png",
+    "public/images/intro/goal-frame.png","public/images/intro/goal-net.png",
+    "public/images/intro/goal-net-hit.png","public/images/intro/goal-net-release.png",
+    "public/images/intro/goal-portal-glow.png"
+  ]
+};
