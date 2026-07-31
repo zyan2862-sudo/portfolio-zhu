@@ -10556,7 +10556,7 @@ html[lang="ja"] .hero-access-title h1{
 .hero-react-lanyard{
   position:absolute;
   z-index:7;
-  top:0;
+  top:-92px;
   right:auto;
   left:clamp(8px,2.4vw,38px);
   width:225px;
@@ -10601,10 +10601,10 @@ html[lang="ja"] .hero-access-title h1{
   outline-offset:4px
 }
 @media(max-width:900px){
-  .hero-react-lanyard{top:0;right:auto;left:8px;width:190px;height:min(70vh,540px)}
+  .hero-react-lanyard{top:-62px;right:auto;left:8px;width:190px;height:min(70vh,540px)}
 }
 @media(max-width:640px){
-  .hero-react-lanyard{top:0;right:auto;left:0;width:135px;height:310px}
+  .hero-react-lanyard{top:-38px;right:auto;left:0;width:135px;height:310px}
 }
 
 /* Legacy CSS lanyard (the live component above replaces this markup). */
