@@ -441,7 +441,9 @@ function setupContact(t){
   const section=$("#contact"),copy=t.contact;
   if(!section)return;
   section.querySelector(".contact-eyebrow").textContent="06 /";
-  section.querySelector(".contact-copy-panel h2").innerHTML=`<span class="contact-main-title">${copy.eyebrow}</span>`;
+  const contactTitle=section.querySelector(".contact-copy-panel h2");
+  contactTitle.innerHTML='<span id="contactWarpText" class="contact-warp-text"></span>';
+  contactTitle.querySelector("#contactWarpText").dataset.text=copy.eyebrow;
   const toast=section.querySelector(".contact-toast");
   let toastTimer=0;
   const showToast=(message,success)=>{
@@ -476,6 +478,247 @@ function setupContact(t){
   contactCleanup=()=>{clearTimeout(toastTimer)};
 }
 let longExperienceActive="beijing-2022",longExperienceTimer=0,longExperienceCleanup=null;
+let clipHoverCleanup=null;
+let hoverPreviewMapCleanup=null;
+let researchMagicBentoCleanup=null;
+function setupHoverPreviewMap(){
+  hoverPreviewMapCleanup?.();
+  const section=document.querySelector("#experience-map"),thumbs=[...document.querySelectorAll(".hover-map-thumb")],previews=[...document.querySelectorAll(".hover-map-preview")],mini=document.querySelector(".hover-map-mini"),dots=[...document.querySelectorAll(".hover-map-mini i")],gsap=window.gsap;
+  if(!section||!thumbs.length||!gsap)return;
+  const headingCopy={
+    zh:{eyebrow:"03.2 / 经历地图",title:["经历","地图"],hint:"悬停照片探索 · 经历地图"},
+    ja:{eyebrow:"03.2 / 経験マップ",title:["経験","マップ"],hint:"写真をホバーして探索 · 経験マップ"},
+    en:{eyebrow:"03.2 / EXPERIENCE MAP",title:["EXPERIENCE","MAP"],hint:"HOVER A FRAME TO EXPLORE · EXPERIENCE MAP"}
+  }[lang],heading=section.querySelector(".hover-map-header");
+  heading.querySelectorAll("h2 span").forEach((node,index)=>node.textContent=headingCopy.title[index]);
+  heading.querySelector("p").textContent=headingCopy.hint;
+  const chapterHeading=section.querySelector(".current-chapter-heading");
+  chapterHeading.querySelector("span").textContent="03 / EXPERIENCE";
+  chapterHeading.querySelector("small").textContent={zh:"经历",ja:"経験",en:"Experience"}[lang];
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const thumbParts=thumbs.flatMap(thumb=>[thumb.querySelector(".hover-map-thumb__image"),thumb.querySelector("figcaption")]).filter(Boolean);
+  let active=-1,timeline=null;
+  const handlers=[];
+  gsap.set(previews,{autoAlpha:0,zIndex:1});
+  gsap.set(thumbParts,{yPercent:0});
+  gsap.set(mini,{autoAlpha:0});
+  gsap.set(dots,{autoAlpha:0,x:0,y:0});
+  const activate=index=>{
+    if(active===index)return;
+    active=index;timeline?.kill();
+    section.classList.add("is-previewing");
+    const preview=previews[index],image=preview.querySelector(".hover-map-preview__image"),cover=preview.querySelector(".hover-map-preview__cover"),copy=[...preview.querySelectorAll(".hover-map-preview__copy>*")];
+    gsap.set(previews.filter((_,i)=>i!==index),{autoAlpha:0,zIndex:1});
+    gsap.set(dots,{autoAlpha:0});
+    if(reduced){gsap.set(preview,{autoAlpha:1,zIndex:3});gsap.set(mini,{autoAlpha:1});gsap.set(dots[index],{autoAlpha:1});return}
+    timeline=gsap.timeline({defaults:{ease:"expo.out"}})
+      .to(thumbParts,{yPercent:110,duration:.5},0)
+      .set(preview,{autoAlpha:1,zIndex:3},0)
+      .fromTo(cover,{scaleY:2},{scaleY:1,duration:.7},0)
+      .fromTo(image,{scale:1.12,filter:"brightness(3)"},{scale:1.04,filter:"brightness(1)",duration:.75},0)
+      .fromTo(copy,{yPercent:70,autoAlpha:0},{yPercent:0,autoAlpha:1,duration:.62,stagger:.06},.12)
+      .to(mini,{autoAlpha:1,duration:.45},.18)
+      .to(dots[index],{autoAlpha:1,duration:.35},.22);
+  };
+  const deactivate=()=>{
+    if(active<0)return;
+    const index=active;active=-1;timeline?.kill();
+    section.classList.remove("is-previewing");
+    if(reduced){gsap.set(previews[index],{autoAlpha:0,zIndex:1});gsap.set(mini,{autoAlpha:0});return}
+    timeline=gsap.timeline({defaults:{ease:"expo.out"}})
+      .to(previews[index],{autoAlpha:0,duration:.3},0)
+      .to(mini,{autoAlpha:0,duration:.25},0)
+      .to(thumbParts,{yPercent:0,duration:.58,stagger:.025},.08)
+      .set(previews[index],{zIndex:1});
+  };
+  thumbs.forEach((thumb,index)=>{
+    const enter=()=>activate(index),leave=()=>deactivate();
+    const move=event=>{
+      if(active!==index)return;
+      const bounds=thumb.querySelector(".hover-map-thumb__window").getBoundingClientRect(),mapBounds=mini.children[index].getBoundingClientRect(),dot=dots[index];
+      const x=gsap.utils.clamp(0,mapBounds.width-6,(event.clientX-bounds.left)/bounds.width*mapBounds.width-3);
+      const y=gsap.utils.clamp(0,mapBounds.height-6,(event.clientY-bounds.top)/bounds.height*mapBounds.height-3);
+      gsap.to(dot,{x,y,duration:.18,ease:"power2.out",overwrite:"auto"});
+    };
+    thumb.addEventListener("pointerenter",enter);thumb.addEventListener("pointerleave",leave);thumb.addEventListener("pointermove",move);thumb.addEventListener("focus",enter);thumb.addEventListener("blur",leave);
+    handlers.push(()=>{thumb.removeEventListener("pointerenter",enter);thumb.removeEventListener("pointerleave",leave);thumb.removeEventListener("pointermove",move);thumb.removeEventListener("focus",enter);thumb.removeEventListener("blur",leave)});
+  });
+  hoverPreviewMapCleanup=()=>{section.classList.remove("is-previewing");timeline?.kill();handlers.forEach(cleanup=>cleanup());gsap.killTweensOf([...thumbs,...thumbParts,...previews,mini,...dots]);gsap.set(thumbParts,{clearProps:"transform"})};
+}
+function setupClipHover(){
+  clipHoverCleanup?.();
+  const section=document.querySelector("#experience-clips"),cards=[...document.querySelectorAll(".clip-hover-card")],gsap=window.gsap;
+  if(!section||!cards.length||!gsap)return;
+  const copy={
+    zh:{eyebrow:"03.5 / 项目时刻",title:["项目","精选"],hint:"悬停查看 · 项目切片",cards:[
+      ["长野木曾相扑大会运营",`<div><b>角色</b><span>地域体育现场运营支持</span></div><div><b>项目任务</b><span>配合相扑大会的整体进程，确保参赛选手按照比赛顺序完成集合、候场和入场，并协助维持现场秩序。</span></div><div><b>具体行动</b><ul><li>根据赛程召集选手并确认到场情况</li><li>引导儿童及家长前往候场区和比赛区域</li><li>与裁判、主持及其他工作人员同步比赛进度</li><li>协助处理座席引导、人员动线和现场突发情况</li></ul></div>`],
+      ["匹克球项目策划与现场运营","从活动方案、赛程设计到现场执行，完成匹克球项目的全流程策划与运营。"],["校园体育活动策划","面向校园场景策划体育活动，统筹流程、人员协作与现场参与体验。"],["SUPER FORMULA 战略提案","基于观众洞察提出赛事传播与体验优化方案，建立与年轻受众的连接。"],["千叶罗德海洋球迷调查","开展现场球迷调研与数据分析，为观赛体验和赛事运营优化提供依据。"],["加载中","新项目正在准备中，敬请期待。"]]},
+    ja:{eyebrow:"03.5 / プロジェクト・モーメント",title:["プロジェクト","ハイライト"],hint:"ホバーして表示 · プロジェクト断片",cards:[
+      ["長野・木曽相撲大会運営",`<div><b>役割</b><span>地域スポーツ現場運営サポート</span></div><div><b>プロジェクト任務</b><span>相撲大会全体の進行に合わせ、選手が試合順に集合・待機・入場できるよう支援し、会場秩序の維持に取り組みました。</span></div><div><b>具体的な行動</b><ul><li>試合日程に基づく選手招集と到着確認</li><li>子どもと保護者を待機・試合エリアへ案内</li><li>審判、司会、スタッフとの進行共有</li><li>座席案内、動線、突発対応をサポート</li></ul></div>`],
+      ["ピックルボール企画・現場運営","企画、試合設計から当日の実施まで、プロジェクト運営の全工程を担当。"],["大学スポーツイベント企画","大学という場に合わせ、進行、人員連携、参加体験を設計。"],["SUPER FORMULA 戦略提案","観客インサイトから発信と体験の改善策を提案し、若年層との接点を設計。"],["千葉ロッテマリーンズ観客調査","現地調査とデータ分析を通じ、観戦体験と運営改善の根拠を提示。"],["LOADING","新しいプロジェクトを準備中です。"]]},
+    en:{eyebrow:"03.5 / PROJECT MOMENTS",title:["PROJECT","HIGHLIGHTS"],hint:"HOVER TO REVEAL · PROJECT CUTS",cards:[
+      ["NAGANO KISO SUMO OPERATIONS",`<div><b>ROLE</b><span>Community sport field-operations support</span></div><div><b>MISSION</b><span>Supported the overall tournament flow, ensuring competitors assembled, waited, and entered in match order while helping maintain an orderly venue.</span></div><div><b>ACTIONS</b><ul><li>Called competitors and confirmed arrivals against the schedule</li><li>Guided children and guardians to waiting and competition areas</li><li>Shared match progress with referees, hosts, and staff</li><li>Supported seating, crowd flow, and on-site contingencies</li></ul></div>`],
+      ["PICKLEBALL PLANNING & OPERATIONS","Delivered the full project cycle, from activity concept and match design to on-site execution."],["CAMPUS SPORT EVENT PLANNING","Designed campus sport activities while coordinating flow, teams, and participant experience."],["SUPER FORMULA STRATEGY PROPOSAL","Turned audience insight into communication and experience ideas that connect with younger fans."],["CHIBA LOTTE MARINES FAN SURVEY","Combined field research and data analysis to inform improvements in fan experience and event operations."],["LOADING","A new project is currently in development."]]}
+  }[lang];
+  const heading=section.querySelector(".clip-hover-heading");
+  heading.querySelectorAll("h2 span").forEach((node,index)=>node.textContent=copy.title[index]);
+  heading.querySelector("p").textContent=copy.hint;
+  const chapterHeading=section.querySelector(".current-chapter-heading");
+  chapterHeading.querySelector("span").textContent="04 / PROJECTS";
+  chapterHeading.querySelector("small").textContent={zh:"项目",ja:"プロジェクト",en:"Projects"}[lang];
+  const detailLabels=D[lang].projectUi,projectDetails=D[lang].projects;
+  const projectDetailMarkup=project=>`<div><b>${detailLabels.role}</b><span>${project.role}</span></div><div><b>${detailLabels.mission}</b><span>${project.mission}</span></div><div><b>${detailLabels.actions}</b><ul>${project.actions.map(action=>`<li>${action}</li>`).join("")}</ul></div>`;
+  cards.forEach((card,index)=>{
+    const body=card.querySelector(".clip-hover-card__link");
+    if(index<projectDetails.length){
+      const project=projectDetails[index];
+      card.querySelector(".clip-hover-card__title").textContent=project.title;
+      body.classList.add("clip-hover-card__details");
+      body.innerHTML=projectDetailMarkup(project);
+    }else{
+      card.querySelector(".clip-hover-card__title").textContent=copy.cards[index][0];
+      body.classList.remove("clip-hover-card__details");
+      body.textContent=copy.cards[index][1];
+    }
+  });
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const symbols="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*+-";
+  const cleanups=[];
+  const splitText=element=>{
+    const original=element.textContent;
+    element.textContent="";
+    const chars=[...original].map(character=>{
+      const span=document.createElement("span");
+      span.className="clip-hover-char";
+      span.textContent=character;
+      span.dataset.initial=character;
+      element.appendChild(span);
+      return span;
+    });
+    cleanups.push(()=>{element.textContent=original});
+    return chars;
+  };
+  const splitTextTree=element=>{
+    const textNodes=[];
+    const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
+    while(walker.nextNode())if(walker.currentNode.nodeValue.trim())textNodes.push(walker.currentNode);
+    return textNodes.flatMap(node=>{
+      const fragment=document.createDocumentFragment();
+      const chars=[...node.nodeValue].map(character=>{
+        const span=document.createElement("span");
+        span.className="clip-hover-char";
+        span.textContent=character;
+        span.dataset.initial=character;
+        fragment.appendChild(span);
+        return span;
+      });
+      node.replaceWith(fragment);
+      return chars;
+    });
+  };
+  cards.forEach((card,index)=>{
+    const image=card.querySelector(".clip-hover-card__image"),imageUrl=image.dataset.image;
+    const secondRow=Math.floor(index/3)%2===1;
+    const orientation=secondRow?"horizontal":"vertical",sliceCount=secondRow?9:5;
+    const wrap=document.createElement("div");
+    wrap.className="clip-hover-card__image-wrap";
+    const slices=Array.from({length:sliceCount},(_,position)=>{
+      const slice=document.createElement("div");
+      slice.className="clip-hover-card__slice";
+      slice.style.backgroundImage=`url(${imageUrl})`;
+      const start=position*100/sliceCount,end=(position+1)*100/sliceCount;
+      slice.style.clipPath=orientation==="vertical"?`polygon(${start}% 0,${end}% 0,${end}% 100%,${start}% 100%)`:`polygon(0 ${start}%,100% ${start}%,100% ${end}%,0 ${end}%)`;
+      wrap.appendChild(slice);
+      return slice;
+    });
+    image.appendChild(wrap);
+    const body=card.querySelector(".clip-hover-card__link");
+    const chars=[...splitText(card.querySelector(".clip-hover-card__date")),...splitText(card.querySelector(".clip-hover-card__title"))],bodyChars=splitTextTree(body);
+    gsap.set(body,{autoAlpha:0,y:22});
+    let timeline=null,scrambleCalls=[],bodyScrambleCalls=[];
+    const scrambleSet=(targets,store)=>{
+      store.forEach(call=>call.kill());
+      return targets.filter(char=>char.dataset.initial.trim()).map((char,charIndex)=>gsap.to(char,{
+        duration:.22,
+        delay:charIndex*.006,
+        repeat:3,
+        repeatRefresh:true,
+        onRepeat:()=>{char.textContent=symbols[Math.floor(Math.random()*symbols.length)]},
+        onComplete:()=>{char.textContent=char.dataset.initial}
+      }));
+    };
+    const scramble=()=>{scrambleCalls=scrambleSet(chars,scrambleCalls)};
+    const scrambleBody=()=>{bodyScrambleCalls=scrambleSet(bodyChars,bodyScrambleCalls)};
+    const enter=()=>{
+      if(reduced){gsap.set(image,{autoAlpha:1});return}
+      timeline?.kill();scramble();
+      const axis=orientation==="vertical"?"yPercent":"xPercent";
+      timeline=gsap.timeline({defaults:{duration:.58,ease:"power3.inOut"}})
+        .fromTo(image,{[axis]:100,autoAlpha:0},{[axis]:0,autoAlpha:1},0)
+        .fromTo(wrap,{[axis]:-100},{[axis]:0},0)
+        .fromTo(slices,{[axis]:position=>position%2?-58:58},{[axis]:0,stagger:.018},0)
+        .to(body,{autoAlpha:1,y:0,duration:.42,ease:"power2.out",onStart:scrambleBody},.5);
+    };
+    const leave=()=>{
+      if(reduced)return;
+      timeline?.kill();
+      const axis=orientation==="vertical"?"yPercent":"xPercent";
+      timeline=gsap.timeline({defaults:{duration:.48,ease:"power3.inOut"}})
+        .to(body,{autoAlpha:0,y:22,duration:.22},0)
+        .to(image,{[axis]:100,autoAlpha:0},0)
+        .to(wrap,{[axis]:-100},0)
+        .to(slices,{[axis]:position=>position%2?-42:42,stagger:.012},0);
+    };
+    card.addEventListener("pointerenter",enter);card.addEventListener("pointerleave",leave);
+    card.addEventListener("focus",enter);card.addEventListener("blur",leave);
+    cleanups.push(()=>{
+      card.removeEventListener("pointerenter",enter);card.removeEventListener("pointerleave",leave);
+      card.removeEventListener("focus",enter);card.removeEventListener("blur",leave);
+      timeline?.kill();scrambleCalls.forEach(call=>call.kill());bodyScrambleCalls.forEach(call=>call.kill());gsap.killTweensOf([image,wrap,body,...slices,...chars,...bodyChars]);wrap.remove();
+    });
+  });
+  clipHoverCleanup=()=>cleanups.reverse().forEach(cleanup=>cleanup());
+}
+function setupResearchMagicBento(){
+  researchMagicBentoCleanup?.();
+  const section=document.querySelector("#research"),cards=[...document.querySelectorAll("#research .research-flow article,#research .research-stats article")],gsap=window.gsap;
+  if(!section||!cards.length||!gsap)return;
+  const cleanups=[],particles=[];
+  cards.forEach(card=>card.classList.add("research-magic-card"));
+  const sectionMove=event=>{
+    cards.forEach(card=>{
+      const rect=card.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
+      const distance=Math.hypot(event.clientX-(rect.left+rect.width/2),event.clientY-(rect.top+rect.height/2));
+      card.style.setProperty("--magic-x",`${x}px`);card.style.setProperty("--magic-y",`${y}px`);
+      card.style.setProperty("--magic-intensity",String(Math.max(0,1-distance/300)));
+    });
+  };
+  section.addEventListener("pointermove",sectionMove);cleanups.push(()=>section.removeEventListener("pointermove",sectionMove));
+  cards.forEach(card=>{
+    const enter=()=>{
+      for(let index=0;index<12;index++){
+        const star=document.createElement("i");star.className="research-magic-star";star.style.left=`${Math.random()*100}%`;star.style.top=`${Math.random()*100}%`;card.appendChild(star);particles.push(star);
+        gsap.fromTo(star,{scale:0,autoAlpha:0},{scale:1,autoAlpha:1,duration:.3,delay:index*.035,ease:"back.out(1.7)"});
+        gsap.to(star,{x:(Math.random()-.5)*70,y:(Math.random()-.5)*70,rotation:Math.random()*360,duration:1.8+Math.random()*1.6,repeat:-1,yoyo:true,ease:"sine.inOut"});
+      }
+    };
+    const move=event=>{
+      const rect=card.getBoundingClientRect(),nx=(event.clientX-rect.left)/rect.width-.5,ny=(event.clientY-rect.top)/rect.height-.5;
+      gsap.to(card,{rotateX:-ny*7,rotateY:nx*7,x:nx*8,y:ny*8,duration:.28,ease:"power2.out",overwrite:"auto",transformPerspective:1000});
+    };
+    const leave=()=>{
+      gsap.to(card,{rotateX:0,rotateY:0,x:0,y:0,duration:.35,ease:"power2.out",overwrite:"auto"});
+      card.querySelectorAll(".research-magic-star").forEach(star=>gsap.to(star,{scale:0,autoAlpha:0,duration:.2,onComplete:()=>star.remove()}));
+    };
+    const click=event=>{
+      const rect=card.getBoundingClientRect(),ripple=document.createElement("i");ripple.className="research-magic-ripple";ripple.style.left=`${event.clientX-rect.left}px`;ripple.style.top=`${event.clientY-rect.top}px`;card.appendChild(ripple);
+      gsap.fromTo(ripple,{scale:0,autoAlpha:.8},{scale:1,autoAlpha:0,duration:.8,ease:"power2.out",onComplete:()=>ripple.remove()});
+    };
+    card.addEventListener("pointerenter",enter);card.addEventListener("pointermove",move);card.addEventListener("pointerleave",leave);card.addEventListener("click",click);
+    cleanups.push(()=>{card.removeEventListener("pointerenter",enter);card.removeEventListener("pointermove",move);card.removeEventListener("pointerleave",leave);card.removeEventListener("click",click)});
+  });
+  researchMagicBentoCleanup=()=>{cleanups.forEach(fn=>fn());gsap.killTweensOf([...cards,...particles]);cards.forEach(card=>{card.classList.remove("research-magic-card");card.querySelectorAll(".research-magic-star,.research-magic-ripple").forEach(node=>node.remove())})};
+}
 function longExperienceMarkup(t){
   const items=t.longExperience,ui=t.longExperienceUi,first=items.find(x=>x.id===longExperienceActive)||items[0];
   const detailIcon=kind=>({
@@ -565,22 +808,19 @@ function setupLongExperience(t){
     scrollScene=ScrollTrigger.create({
       id:"long-experience-scroll-scene",
       trigger:section,
-      start:"top top",
-      end:()=>`+=${Math.round(innerHeight*1.65)}`,
-      pin:true,
-      pinSpacing:true,
-      anticipatePin:1,
+      start:"top 68%",
+      end:"bottom 32%",
       invalidateOnRefresh:true,
       onEnter:()=>{if(nodes[0])selectNode(nodes[0],true)},
       onLeaveBack:()=>{if(nodes[0])selectNode(nodes[0],true)},
       onUpdate:self=>{
         const index=Math.min(items.length-1,Math.floor(self.progress*items.length));
         const node=nodes[index];
-        if(node&&node.dataset.longKey!==active)selectNode(node,true);
+        if(node&&node.dataset.longKey!==active)selectNode(node);
       },
       onEnterBack:self=>{
         const index=Math.min(items.length-1,Math.floor(self.progress*items.length));
-        if(nodes[index])selectNode(nodes[index],true);
+        if(nodes[index])selectNode(nodes[index]);
       }
     });
   }
@@ -823,13 +1063,14 @@ function setupHeroForeground(){
   const hero=document.querySelector(".hero-video-intro"),title=hero?.querySelector(".hero-access-title");
   if(!hero||!title)return;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const titleChars=[...title.querySelectorAll(".hero-title-char")],headset=title.querySelector(".hero-vr-headset"),headsetButton=title.querySelector(".hero-vr-headset-wrap");
+  const titleChars=[...title.querySelectorAll(".hero-title-char")],accessChars=[...title.querySelectorAll(".hero-title-access-char")],accessWiggles=[...title.querySelectorAll(".hero-access-wiggle")],accessZone=title.querySelector(".hero-access-hit"),headset=title.querySelector(".hero-vr-headset"),headsetButton=title.querySelector(".hero-vr-headset-wrap");
   const gsap=window.gsap;
-  let readyTimer=0,doneTimer=0,accessFrame=0,titleTimeline=null;
+  let readyTimer=0,doneTimer=0,accessFrame=0,titleTimeline=null,wiggleTweens=[];
   const booted=sessionStorage.getItem("heroSystemBooted")==="true";
   hero.classList.remove("is-booting","hero-main-ready","hero-boot-complete","is-accessing","reduced-boot");
   if(!gsap){
     titleChars.forEach(char=>Object.assign(char.style,{opacity:"1",visibility:"visible",transform:"none",filter:"none"}));
+    title.classList.add("is-title-stable");
     if(headset)Object.assign(headset.style,{opacity:"1",visibility:"visible",transform:"none",filter:"none"});
   }else if(reduced){
     hero.classList.add("hero-main-ready","hero-boot-complete","reduced-boot");
@@ -844,21 +1085,54 @@ function setupHeroForeground(){
       hero.classList.add("hero-boot-complete");
     },1800);
   }
-  if(reduced){
-    gsap.set(titleChars,{autoAlpha:1,yPercent:0,rotationX:0,filter:"none"});
+  if(reduced||booted){
+    gsap.set(titleChars,{autoAlpha:1,yPercent:0,filter:"none",clearProps:"transform"});
+    title.classList.add("is-title-stable");
     if(headset)gsap.set(headset,{autoAlpha:1,y:0,scale:1,rotation:0});
   }else{
-    titleTimeline=gsap.timeline({delay:booted?.16:1.08,defaults:{ease:"power3.out"}});
-    gsap.set(titleChars,{autoAlpha:.26,yPercent:38,rotationX:-38,filter:"blur(4px)"});
+    titleTimeline=gsap.timeline({delay:1.08,defaults:{ease:"power3.out"},onComplete:()=>{
+      gsap.set(titleChars,{autoAlpha:1,filter:"none",clearProps:"transform,opacity,visibility,willChange"});
+      title.classList.add("is-title-stable");
+    }});
+    gsap.set(titleChars,{autoAlpha:.26,yPercent:30,filter:"blur(3px)"});
     if(headset)gsap.set(headset,{autoAlpha:0,y:18,scale:.76,rotation:-7});
     const revealSteps=[...new Set(titleChars.map(char=>Number(char.dataset.revealStep)))].sort((a,b)=>a-b);
     revealSteps.forEach((step,index)=>{
       const stepChars=titleChars.filter(char=>Number(char.dataset.revealStep)===step);
       const isAccessStep=stepChars.some(char=>char.classList.contains("hero-title-access-char"));
       const at=index*.17;
-      titleTimeline.to(stepChars,{autoAlpha:1,yPercent:0,rotationX:0,filter:"blur(0px)",duration:.48,clearProps:"filter"},at);
+      titleTimeline.to(stepChars,{autoAlpha:1,yPercent:0,filter:"blur(0px)",duration:.44,clearProps:"filter"},at);
       if(isAccessStep&&headset)titleTimeline.to(headset,{autoAlpha:1,y:0,scale:1,rotation:0,duration:.54,ease:"back.out(1.55)"},at);
     });
+  }
+  if(gsap&&!reduced&&accessChars.length&&accessZone){
+    wiggleTweens=accessWiggles.map((char,index)=>gsap.to(char,{
+      rotation:index%2?10:-10,
+      duration:1.15+index*.12,
+      repeat:-1,
+      yoyo:true,
+      ease:"sine.inOut",
+      delay:index*.16
+    }));
+    const moveAccess=event=>{
+      const rect=accessZone.getBoundingClientRect();
+      const nx=gsap.utils.clamp(-1,1,(event.clientX-(rect.left+rect.width/2))/(rect.width/2));
+      const ny=gsap.utils.clamp(-1,1,(event.clientY-(rect.top+rect.height/2))/(rect.height/2));
+      accessChars.forEach((char,index)=>gsap.to(char,{
+        x:nx*(index?18:14),
+        y:ny*(index?12:16),
+        duration:.35,
+        ease:"power2.out",
+        overwrite:"auto"
+      }));
+    };
+    const resetAccess=()=>gsap.to(accessChars,{x:0,y:0,duration:.7,ease:"elastic.out(1,.4)",overwrite:"auto"});
+    accessZone.addEventListener("pointermove",moveAccess);
+    accessZone.addEventListener("pointerleave",resetAccess);
+    accessZone._heroAccessCleanup=()=>{
+      accessZone.removeEventListener("pointermove",moveAccess);
+      accessZone.removeEventListener("pointerleave",resetAccess);
+    };
   }
   const activate=()=>{
     if(reduced)return;
@@ -880,11 +1154,19 @@ function setupHeroForeground(){
     hero.classList.add("hero-entry-open");
     document.querySelector(".sport-reel")?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
   };
+  const enterFromAccess=event=>{
+    if(event.type==="keydown"&&!['Enter',' '].includes(event.key))return;
+    if(event.target.closest?.(".hero-vr-headset-wrap"))return;
+    if(event.type==="keydown")event.preventDefault();
+    enterPortfolio();
+  };
   if(headsetButton&&!heroEntryOpened){
     document.documentElement.classList.add("hero-entry-locked");
     requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"auto"}));
   }
   headsetButton?.addEventListener("click",enterPortfolio);
+  accessZone?.addEventListener("click",enterFromAccess);
+  accessZone?.addEventListener("keydown",enterFromAccess);
   heroForegroundCleanup=()=>{
     document.documentElement.classList.remove("hero-entry-locked");
     clearTimeout(readyTimer);
@@ -895,8 +1177,12 @@ function setupHeroForeground(){
     title.removeEventListener("focus",activate);
     title.removeEventListener("blur",deactivate);
     headsetButton?.removeEventListener("click",enterPortfolio);
+    accessZone?.removeEventListener("click",enterFromAccess);
+    accessZone?.removeEventListener("keydown",enterFromAccess);
+    accessZone?._heroAccessCleanup?.();
+    wiggleTweens.forEach(tween=>tween.kill());
     titleTimeline?.kill();
-    gsap?.killTweensOf([...titleChars,...(headset?[headset]:[])]);
+    gsap?.killTweensOf([...titleChars,...accessWiggles,...(headset?[headset]:[])]);
   };
 }
 let chapterZoneRailCleanup=null;
@@ -1219,20 +1505,25 @@ function render(){
   orbitalExperienceCleanup?.();
   chapterRouteCleanup?.();
   researchSignalCleanup?.();
+  researchMagicBentoCleanup?.();
   document.querySelector("[data-chapter-route]")?.remove();
-  const t=D[lang],ids=["about","skills","experience","projects","research","contact"],projectLabel={zh:"项目",ja:"プロジェクト",en:"Projects"}[lang];
+  const t=D[lang],ids=["about","skills","experience-map","experience-clips","research","contact"],projectLabel={zh:"项目",ja:"プロジェクト",en:"Projects"}[lang];
   document.documentElement.lang=lang==="zh"?"zh-CN":lang;
   const navItems=[t.nav[0],t.nav[5],t.nav[2],projectLabel,t.nav[3],t.nav[6]];$("nav").innerHTML=navItems.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join("");
   $(".langs").innerHTML=["zh","ja","en"].map(x=>`<button data-lang="${x}" class="${x===lang?"active":""}" aria-pressed="${x===lang}">${x==="zh"?"中":x==="ja"?"日":"EN"}</button>`).join("");
   let heroRevealStep=0;
-  const heroChars=(text,sharedStep=null,extraClass="")=>[...text].map(char=>`<span class="hero-title-char ${extraClass}" data-reveal-step="${sharedStep??heroRevealStep++}">${char===" "?"&nbsp;":char}</span>`).join("");
+  const heroChars=(text,sharedStep=null,extraClass="")=>[...text].map(char=>{
+    const content=char===" "?"&nbsp;":char;
+    const wrapped=extraClass.includes("hero-title-access-char")?`<span class="hero-access-wiggle">${content}</span>`:content;
+    return `<span class="hero-title-char ${extraClass}" data-reveal-step="${sharedStep??heroRevealStep++}">${wrapped}</span>`;
+  }).join("");
   const heroLine=(text,index)=>{
     if(lang==="zh"&&index===0&&text.includes("接入")){
       const [before,after]=text.split("接入");
       const beforeMarkup=heroChars(before);
       const accessStep=heroRevealStep++;
       const enterHint={zh:"点击眼镜进入",ja:"ゴーグルをクリック",en:"CLICK HEADSET TO ENTER"}[lang];
-      return `${beforeMarkup}<span class="hero-vr-anchor"><button class="hero-vr-headset-wrap" type="button" aria-label="${enterHint}"><img class="hero-vr-headset" src="public/images/metaverse/vr-headset-enter.png" alt="" draggable="false"><span class="hero-vr-entry-hint">${enterHint}<i aria-hidden="true">↘</i></span></button>${heroChars("接入",accessStep,"hero-title-access-char")}</span>${heroChars(after)}`;
+      return `${beforeMarkup}<span class="hero-vr-anchor"><button class="hero-vr-headset-wrap" type="button" aria-label="${enterHint}"><img class="hero-vr-headset" src="public/images/metaverse/vr-headset-enter.png" alt="" draggable="false"><span class="hero-vr-entry-hint">${enterHint}<i aria-hidden="true">↘</i></span></button><span class="hero-access-hit" role="button" tabindex="0" aria-label="${enterHint}">${heroChars("接入",accessStep,"hero-title-access-char")}</span></span>${heroChars(after)}`;
     }
     return heroChars(text);
   };
@@ -1282,7 +1573,10 @@ function render(){
   $("#contact").innerHTML=`<div class="contact-shell"><div class="contact-copy-panel"><p class="contact-eyebrow">06 /</p><h2>${contact.headline}</h2><p class="contact-message">${contact.message}</p><div class="contact-person"><span class="contact-person-icon" aria-hidden="true">◎</span><span class="contact-person-copy"><small>${contact.nameLabel}</small><strong>${contact.name}</strong><em>${contact.school}</em><b>${contact.identity}</b></span></div><div class="contact-methods"><div class="contact-method"><button class="contact-copy" type="button" data-copy-value="${contact.phone}" aria-label="${contact.copy} ${contact.phone}"><span><small>${contact.phoneLabel}</small><strong>${contact.phone}</strong></span><span class="contact-copy-action"><i class="contact-copy-icon">⧉</i>${contact.copy}</span></button><a href="tel:09042821181" aria-label="${contact.call}">↗</a></div><div class="contact-method"><button class="contact-copy" type="button" data-copy-value="${contact.email}" aria-label="${contact.copy} ${contact.email}"><span><small>${contact.emailLabel}</small><strong>${contact.email}</strong></span><span class="contact-copy-action"><i class="contact-copy-icon">⧉</i>${contact.copy}</span></button><a href="mailto:${contact.email}" aria-label="${contact.mail}">↗</a></div></div><div class="contact-status"><span>${contact.tokyo}</span><span>${contact.available}</span></div></div><div class="contact-character-stage"><div class="contact-glow" aria-hidden="true"></div><div class="contact-character-follow"><div class="contact-character-float"><img class="contact-character-image" src="images/contact-character.png" alt="${contact.imageAlt}" draggable="false"><div class="contact-character-placeholder"><span>YZ</span><p>${contact.imageFallback}</p></div></div></div></div></div><div class="contact-toast" role="status" aria-live="polite" aria-atomic="true"></div><form hidden aria-hidden="true"></form>`;
   $("footer").innerHTML=`<b>YAN ZHU</b><span>${t.footer}</span><span>© 2026</span>`;
   setupResearchInteraction();
+  setupResearchMagicBento();
   setupLongExperience(t);
+  setupHoverPreviewMap();
+  setupClipHover();
   setupProjectExplorer(t);
   setupProfileFramework(frameworkCopy,frameworkUi);
   setupContact(t);

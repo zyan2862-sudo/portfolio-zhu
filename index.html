@@ -8,10 +8,10 @@
   <meta property="og:image" content="assets/og-sport-portfolio.png">
   <meta name="theme-color" content="#03101f">
   <title>Yan Zhu | Sport × Research × Field</title>
-  <link rel="stylesheet" href="style.css?v=20260805-PROJECT-FRAMES-02">
+  <link rel="stylesheet" href="style.css?v=20260806-MAGIC-BENTO-FRAME-19">
   <link rel="stylesheet" href="tarotTransition.css?v=20260803-13">
-  <link rel="stylesheet" href="dist/lanyard/lanyard.css?v=20260731-1450">
-  <script src="gsap.min.js?v=3.15.0"></script><script src="ScrollTrigger.min.js?v=3.15.0"></script><script src="portfolioData.js?v=20260731-2524" defer></script><script src="researchSceneData.js" defer></script><script src="app.js?v=20260805-ABOUT-PUNCTUATION-02" defer></script>
+  <link rel="stylesheet" href="dist/lanyard/lanyard.css?v=20260806-PAPER-NOTE-01">
+  <script src="gsap.min.js?v=3.15.0"></script><script src="ScrollTrigger.min.js?v=3.15.0"></script><script src="portfolioData.js?v=20260731-2524" defer></script><script src="researchSceneData.js" defer></script><script src="app.js?v=20260806-MAGIC-BENTO-14" defer></script>
   <style>
     main>.section{border-top:0!important}
     .profile-framework{padding-top:32px!important}
@@ -298,7 +298,8 @@
       <div><span>LIVE SPORT</span><b>FIELD OPERATIONS</b><span>FAN EXPERIENCE</span><b>SPORT RESEARCH</b><span>SNOW TOURISM</span><b>CHINA ↔ JAPAN</b></div>
     </div>
     <section class="sport-reel" aria-label="Sports field highlights">
-      <p>SPORT IS NOT A BACKDROP. IT IS THE FIELD I ENTER.</p>
+      <div id="sportReelSoftAurora" class="sport-reel-soft-aurora" aria-hidden="true"></div>
+      <div id="sportReelBulgeText" class="sport-reel-bulge-text" role="img" aria-label="SPORT IS NOT A BACKDROP. IT IS THE FIELD I ENTER."></div>
       <div class="sport-reel-track">
         <div class="sport-reel-row" data-direction="right">
           <figure><img src="images/reel-snowboard.jpg" alt="个人雪上运动经历" loading="lazy"></figure>
@@ -331,9 +332,98 @@
       <div class="profile-framework-head"></div>
       <div id="skills" class="profile-framework-grid"></div>
     </section>
-    <section id="experience" class="section reveal"></section>
-    <section id="projects" class="section projects-showcase reveal"></section>
+    <section id="experience" class="section reveal" hidden aria-hidden="true"></section>
+    <!-- Hover Preview Mini Map · from oriform.art · keep this line if redistributing -->
+    <section id="experience-map" class="hover-map-section" aria-label="经历预览地图">
+      <div id="experienceMapLiquidEther" class="hover-map-liquid-ether" aria-hidden="true"></div>
+      <div class="current-chapter-heading compact-section-heading"><span>03 / EXPERIENCE</span><small>经历</small><i aria-hidden="true"></i></div>
+      <header class="hover-map-header">
+        <h2><span>EXPERIENCE</span> <span>MAP</span></h2>
+        <p>HOVER A FRAME TO EXPLORE · 经历地图</p>
+      </header>
+      <div class="hover-map-previews" aria-live="polite">
+        <article class="hover-map-preview" data-preview="0">
+          <div class="hover-map-preview__image" style="background-image:url(images/beijing-2022-venue.png)"></div>
+          <div class="hover-map-preview__cover"></div>
+          <div class="hover-map-preview__copy"><div class="hover-map-preview__meta"><small>BEIJING 2022</small><dl><div><dt>角色</dt><dd>国际合作伙伴服务与项目协调</dd></div><div><dt>时间</dt><dd>2021.10 — 2022.03</dd></div></dl></div><div class="hover-map-preview__detail"><small>EXPERIENCE 01</small><h3>具体内容</h3><p>负责国际合作伙伴团队的人员信息整理、证件与行程需求确认、赛事期间服务协调，以及中、日、英三语沟通支持。持续跟进临时变更与现场问题，在国际奥委会、合作伙伴和执行团队之间准确传递信息、确认优先级并推动解决，保障不同团队在高强度赛事环境下顺畅协作。</p></div></div>
+        </article>
+        <article class="hover-map-preview" data-preview="1">
+          <div class="hover-map-preview__image" style="background-image:url(images/yuru-sports-arena.png)"></div>
+          <div class="hover-map-preview__cover"></div>
+          <div class="hover-map-preview__copy"><div class="hover-map-preview__meta"><small>YURU SPORTS</small><dl><div><dt>角色</dt><dd>体育活动运营实习生</dd></div><div><dt>时间</dt><dd>2026.06 — 现在</dd></div></dl></div><div class="hover-map-preview__detail"><small>EXPERIENCE 02</small><h3>具体内容</h3><p>参与体育活动从筹备到落地的完整运营流程，包括物资与场地准备、现场布置、规则说明、裁判支持、参与者签到和动线引导。活动过程中观察参与者的规则理解、互动状态与现场反馈，及时协助处理突发情况，并在复盘中从流程效率和体验设计角度提出可执行的改善建议。</p></div></div>
+        </article>
+        <article class="hover-map-preview" data-preview="2">
+          <div class="hover-map-preview__image" style="background-image:url(images/asian-games-service.png)"></div>
+          <div class="hover-map-preview__cover"></div>
+          <div class="hover-map-preview__copy"><div class="hover-map-preview__meta"><small>AICHI-NAGOYA 2026</small><dl><div><dt>角色</dt><dd>国际接待与语言服务支持</dd></div><div><dt>时间</dt><dd>2026.09 — 预计</dd></div></dl></div><div class="hover-map-preview__detail"><small>EXPERIENCE 03</small><h3>具体内容</h3><p>面向国际赛事来宾与相关团队提供接待、信息引导和多语言沟通支持，协助确认现场安排、回应即时需求并处理跨文化交流中的信息差异。通过与不同职能团队保持清晰沟通，连接海外参与者与赛事执行体系，为来宾建立准确、安心且连贯的赛事服务体验。</p></div></div>
+        </article>
+        <div class="hover-map-mini" aria-hidden="true">
+          <span><i></i></span><span><i></i></span><span><i></i></span>
+        </div>
+      </div>
+      <div class="hover-map-thumbs">
+        <figure class="hover-map-thumb" tabindex="0" data-map-index="0"><div class="hover-map-thumb__window"><div class="hover-map-thumb__image" style="background-image:url(images/beijing-2022-venue.png)"></div></div></figure>
+        <figure class="hover-map-thumb" tabindex="0" data-map-index="1"><div class="hover-map-thumb__window"><div class="hover-map-thumb__image" style="background-image:url(images/yuru-sports-arena.png)"></div></div></figure>
+        <figure class="hover-map-thumb" tabindex="0" data-map-index="2"><div class="hover-map-thumb__window"><div class="hover-map-thumb__image" style="background-image:url(images/asian-games-service.png)"></div></div></figure>
+      </div>
+    </section>
+    <!-- Clip Hover Effect · from oriform.art · keep this line if redistributing -->
+    <section id="experience-clips" class="clip-hover-section" aria-labelledby="experienceClipsTitle">
+      <div class="current-chapter-heading compact-section-heading"><span>04 / PROJECTS</span><small>项目</small><i aria-hidden="true"></i></div>
+      <header class="clip-hover-heading">
+        <h2 id="experienceClipsTitle"><span>PROJECT</span> <span>HIGHLIGHTS</span></h2>
+        <p>HOVER TO REVEAL · 项目切片</p>
+      </header>
+      <div class="clip-hover-grid">
+        <article class="clip-hover-card" tabindex="0">
+          <div class="clip-hover-card__image" data-image="images/kiso-sumo-project-2026-v2.png"></div>
+          <span class="clip-hover-card__date">01 / 2026.06</span>
+          <h3 class="clip-hover-card__title">长野木曾相扑大会运营</h3>
+          <div class="clip-hover-card__link clip-hover-card__details">
+            <div><b>角色</b><span>地域体育现场运营支持</span></div>
+            <div><b>项目任务</b><span>配合相扑大会的整体进程，确保参赛选手按照比赛顺序完成集合、候场和入场，并协助维持现场秩序。</span></div>
+            <div><b>具体行动</b><ul><li>根据赛程召集选手并确认到场情况</li><li>引导儿童及家长前往候场区和比赛区域</li><li>与裁判、主持及其他工作人员同步比赛进度</li><li>协助处理座席引导、人员动线和现场突发情况</li></ul></div>
+          </div>
+        </article>
+        <article class="clip-hover-card" tabindex="0">
+          <div class="clip-hover-card__image" data-image="images/pickleball-project-2026-v2.png"></div>
+          <span class="clip-hover-card__date">02 / 2026</span>
+          <h3 class="clip-hover-card__title">匹克球项目策划与现场运营</h3>
+          <div class="clip-hover-card__link"></div>
+        </article>
+        <article class="clip-hover-card" tabindex="0">
+          <div class="clip-hover-card__image" data-image="images/campus-activities-project-2026-v2.png"></div>
+          <span class="clip-hover-card__date">03 / CAMPUS</span>
+          <h3 class="clip-hover-card__title">校园体育活动策划</h3>
+          <div class="clip-hover-card__link"></div>
+        </article>
+        <article class="clip-hover-card" tabindex="0">
+          <div class="clip-hover-card__image" data-image="images/super-formula-project-2026-v2.png"></div>
+          <span class="clip-hover-card__date">04 / STRATEGY</span>
+          <h3 class="clip-hover-card__title">SUPER FORMULA 战略提案</h3>
+          <div class="clip-hover-card__link"></div>
+        </article>
+        <article class="clip-hover-card" tabindex="0">
+          <div class="clip-hover-card__image" data-image="images/chiba-survey-project-2026-v5.png"></div>
+          <span class="clip-hover-card__date">05 / RESEARCH</span>
+          <h3 class="clip-hover-card__title">千叶罗德海洋球迷调查</h3>
+          <div class="clip-hover-card__link"></div>
+        </article>
+        <article class="clip-hover-card is-loading" tabindex="0">
+          <div class="clip-hover-card__image" data-image="images/projects-cyber-arena-bg.png"></div>
+          <span class="clip-hover-card__date">06 / NEXT</span>
+          <h3 class="clip-hover-card__title">LOADING</h3>
+          <div class="clip-hover-card__link">新项目正在准备中，敬请期待。</div>
+        </article>
+      </div>
+    </section>
+    <section id="projects" class="section projects-showcase reveal" hidden aria-hidden="true"></section>
     <section id="research" class="section blue reveal"></section>
+    <!-- Kinetic Paper Trail · from oriform.art · keep this line if redistributing -->
+    <section id="field-archive" class="kinetic-photo-trail" aria-label="滚动相片胶带">
+      <div id="kineticPhotoTrail" class="kinetic-photo-trail__mount"></div>
+      <p class="kinetic-photo-trail__secret-note">莫名其妙的卷纸，其实是照片墙，留在这里没有任何意义，只是好玩。</p>
+    </section>
     <section id="contact" class="section contact reveal"></section>
   </main>
   <footer></footer>
