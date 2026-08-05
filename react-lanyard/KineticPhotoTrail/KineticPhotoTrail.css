@@ -1,0 +1,8 @@
+.kinetic-photo-trail{position:sticky;z-index:1;top:0;width:100%;height:clamp(520px,72vw,820px);min-height:520px;overflow:hidden;background:linear-gradient(180deg,transparent 0%,transparent 10%,#080e18 24%,#3f4a57 62%,#e7eaf0 86%,#f9fafc 100%),linear-gradient(90deg,#03060b 0%,#020409 20%,#02060c 40%,#040a13 60%,#040c17 80%,#09101d 100%);border:0;isolation:isolate;transform:translateZ(0)}
+.kinetic-photo-trail__mount,.kinetic-photo-trail__scene{width:100%;height:100%}
+.kinetic-photo-trail__scene{position:relative;cursor:crosshair;outline:none}
+.kinetic-photo-trail__scene:focus-visible{box-shadow:inset 0 0 0 2px #e100ff}
+.kinetic-photo-trail__scene canvas{display:block;width:100%!important;height:100%!important}
+.kinetic-photo-trail__secret-note{position:absolute;z-index:4;right:clamp(12px,1.8vw,28px);bottom:clamp(10px,1.5vw,22px);max-width:min(72vw,520px);margin:0;color:rgba(18,31,47,.32);font:500 clamp(7px,.55vw,9px)/1.45 ui-monospace,SFMono-Regular,Menlo,"PingFang SC",sans-serif;letter-spacing:.08em;text-align:right;pointer-events:none;user-select:none}
+@media(max-width:700px){.kinetic-photo-trail{height:500px;min-height:500px}}
+@media(max-width:700px){.kinetic-photo-trail__secret-note{max-width:78vw;color:rgba(18,31,47,.28);font-size:6.5px}}
