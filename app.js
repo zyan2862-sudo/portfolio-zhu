@@ -824,10 +824,14 @@ function setupHeroForeground(){
   if(!hero||!title)return;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const titleChars=[...title.querySelectorAll(".hero-title-char")],headset=title.querySelector(".hero-vr-headset"),headsetButton=title.querySelector(".hero-vr-headset-wrap");
+  const gsap=window.gsap;
   let readyTimer=0,doneTimer=0,accessFrame=0,titleTimeline=null;
   const booted=sessionStorage.getItem("heroSystemBooted")==="true";
   hero.classList.remove("is-booting","hero-main-ready","hero-boot-complete","is-accessing","reduced-boot");
-  if(reduced){
+  if(!gsap){
+    titleChars.forEach(char=>Object.assign(char.style,{opacity:"1",visibility:"visible",transform:"none",filter:"none"}));
+    if(headset)Object.assign(headset.style,{opacity:"1",visibility:"visible",transform:"none",filter:"none"});
+  }else if(reduced){
     hero.classList.add("hero-main-ready","hero-boot-complete","reduced-boot");
   }else if(booted){
     hero.classList.add("hero-main-ready","hero-boot-complete");
@@ -892,14 +896,14 @@ function setupHeroForeground(){
     title.removeEventListener("blur",deactivate);
     headsetButton?.removeEventListener("click",enterPortfolio);
     titleTimeline?.kill();
-    gsap.killTweensOf([...titleChars,...(headset?[headset]:[])]);
+    gsap?.killTweensOf([...titleChars,...(headset?[headset]:[])]);
   };
 }
 let chapterZoneRailCleanup=null;
 function setupChapterZoneRail(){
   chapterZoneRailCleanup?.();
   document.querySelector("[data-zone-rail]")?.remove();
-  if(innerWidth<900)return;
+  if(innerWidth<900||!window.gsap||!window.ScrollTrigger)return;
   gsap.registerPlugin(ScrollTrigger);
   const chapterLabels={
     zh:["关于我","专业能力","经历","项目","研究"],
