@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import './KineticPhotoTrail.css';
 
 function usePhotoAtlas() {
-  const texture = useLoader(THREE.TextureLoader, '/images/kinetic-photo-atlas.jpg');
+  const texture = useLoader(THREE.TextureLoader, 'images/kinetic-photo-atlas.jpg');
   React.useMemo(() => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.wrapS = THREE.RepeatWrapping;
