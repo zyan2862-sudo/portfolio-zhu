@@ -79,7 +79,7 @@ function profileFrameworkMarkup(copy,ui){
     <div class="sport-overlay-center" aria-live="polite"><span></span></div>
     <button type="button" class="sport-core-hotspot" aria-label="SPORT core"></button>
     <div class="sport-orbit" role="group" aria-label="SPORT ${copy.centerLabel}"><span class="sport-orbit-ring" aria-hidden="true"></span><span class="sport-orbit-layer sport-outer-orbit" aria-hidden="true"></span><span class="sport-orbit-layer sport-middle-dashed-orbit" aria-hidden="true"></span><span class="sport-orbit-layer sport-inner-scan-orbit" aria-hidden="true"></span><span class="sport-orbit-path" aria-hidden="true"></span>
-      ${copy.keywords.map((item,index)=>`<button type="button" class="sport-letter" data-key="${item.word.toLowerCase()}" data-sport-index="${index}" aria-label="${item.letter} — ${item.word}" aria-pressed="false"><b>${item.letter}</b></button>`).join("")}
+      ${copy.keywords.map((item,index)=>`<button type="button" class="sport-letter" data-key="${item.word.toLowerCase()}" data-sport-index="${index}" aria-label="${item.letter} — ${item.word}" aria-pressed="false"><b>${item.letter}<em class="sport-letter-ripples" aria-hidden="true"><i></i><i></i></em></b></button>`).join("")}
       <div class="sport-center" aria-live="polite"><strong>SPORT</strong><small>FIVE QUALITIES<br>THAT SHAPE WHO I AM.</small><p></p></div>
     </div>
     ${copy.keywords.map((item,index)=>`<article class="sport-detail-overlay sport-info-card" data-key="${item.word.toLowerCase()}" aria-live="polite">
@@ -164,7 +164,7 @@ function setupProfileFramework(copy,ui){
     button.addEventListener("pointerenter",()=>select(index,true));
     button.addEventListener("focus",()=>select(index,true));
     button.addEventListener("blur",()=>select(null,true));
-    button.addEventListener("click",()=>window.matchMedia("(max-width: 767px), (hover: none)").matches&&select(index));
+    button.addEventListener("click",()=>select(index));
   });
   core.addEventListener("pointerenter",()=>section.classList.add("core-preview"));
   core.addEventListener("pointerleave",()=>section.classList.remove("core-preview"));
@@ -191,16 +191,16 @@ function setupProfileFramework(copy,ui){
   observer.observe(section);
   requestAnimationFrame(()=>section.classList.add("profile-ready"));
   select(null);
-  profileFrameworkCleanup=()=>{clearTimeout(timer);if(pointerRaf)cancelAnimationFrame(pointerRaf);window.removeEventListener("resize",updateNodeCenters);stage.removeEventListener("pointermove",onPointerMove);stage.removeEventListener("pointerleave",onStageLeave);observer.disconnect()};
+  profileFrameworkCleanup=()=>{clearTimeout(timer);document.body.classList.remove("sport-portal-lock");if(pointerRaf)cancelAnimationFrame(pointerRaf);window.removeEventListener("resize",updateNodeCenters);stage.removeEventListener("pointermove",onPointerMove);stage.removeEventListener("pointerleave",onStageLeave);observer.disconnect()};
 }
 const aboutCopy={
-  zh:{label:"ABOUT ME",local:"关于我",heading:"体育让我看见，<br>人与世界如何连接。",sub:"Connecting People, Operations and Insights Through Sport.",body:["朱妍，现居东京，法政大学体育健康学研究科体育管理方向硕士研究生。","我关注国际体育赛事、体育活动运营、项目管理与体育消费者研究。曾参与北京2022冬奥会相关项目，并在日本持续积累体育活动运营、地区体育和赛事现场经验。","我的优势在于将项目执行、数据分析和中日英沟通结合起来，在复杂的体育项目中连接参与者、组织和现场。"],view:"查看我的经历",contact:"联系我",location:"东京，日本",languages:"中文 / 日本語 / English",focus:"当前关注",badgeRole:"体育管理专业研究生"},
+  zh:{label:"ABOUT ME",local:"关于我",heading:"体育让我看见<br>人与世界如何连接",sub:"Connecting People, Operations and Insights Through Sport.",body:["朱妍，现居东京，法政大学体育健康学研究科体育管理方向硕士研究生。","我关注国际体育赛事、体育活动运营、项目管理与体育消费者研究。曾参与北京2022冬奥会相关项目，并在日本持续积累体育活动运营、地区体育和赛事现场经验。","我的优势在于将项目执行、数据分析和中日英沟通结合起来，在复杂的体育项目中连接参与者、组织和现场。"],view:"查看我的经历",contact:"联系我",location:"东京，日本",languages:"中文 / 日本語 / English",focus:"当前关注",badgeRole:"体育管理专业研究生"},
   ja:{label:"ABOUT ME",local:"私について",heading:"スポーツを通して、<br>人と世界のつながりを見る。",sub:"Connecting People, Operations and Insights Through Sport.",body:["朱妍。東京在住、法政大学大学院スポーツ健康学研究科でスポーツマネジメントを学ぶ修士課程の学生です。","国際スポーツ大会、イベント運営、プロジェクトマネジメント、スポーツ消費者研究に取り組んでいます。北京2022関連プロジェクトを経験し、日本でも地域スポーツと大会現場で実践を重ねています。","プロジェクト実行、データ分析、中日英のコミュニケーションを組み合わせ、人・組織・現場をつなぐことが私の強みです。"],view:"経験を見る",contact:"お問い合わせ",location:"東京、日本",languages:"中文 / 日本語 / English",focus:"CURRENT FOCUS",badgeRole:"スポーツマネジメント専攻 大学院生"},
   en:{label:"ABOUT ME",local:"About",heading:"Sport shows me how<br>people connect with the world.",sub:"Connecting People, Operations and Insights Through Sport.",body:["I am Yan Zhu, a Tokyo-based master’s student in Sport Management at Hosei University.","My work spans international sport events, field operations, project management, and sport consumer research. Beijing 2022 was a formative experience, followed by continued hands-on work in Japanese sport and community settings.","I bring project execution, data analysis, and Chinese–Japanese–English communication together to connect participants, organizations, and the field."],view:"View Experience",contact:"Contact Me",location:"Tokyo, Japan",languages:"中文 / 日本語 / English",focus:"CURRENT FOCUS",badgeRole:"Graduate Student in Sport Management"}
 };
 function aboutSection(copy){
   const tags=["International Sports Events","Event Operations","Consumer Research","Multilingual Coordination"];
-  return `<div class="about-shell"><div class="about-intro">
+  return `<div id="aboutSplashCursor" class="about-splash-cursor" aria-hidden="true"></div><div class="about-shell"><div class="about-intro">
     <div class="about-kicker"><span>01 / ${copy.label}</span><small>${copy.local}</small></div>
     <h2>${copy.heading}</h2><p class="about-subtitle">${copy.sub}</p>
     <div class="about-body">${copy.body.map(x=>`<p>${x}</p>`).join("")}</div>
@@ -226,6 +226,7 @@ function projectCategory(project){
 function projectCard(project,ui,index){
   const number=project.number||String(index+1).padStart(2,"0"),category=projectCategory(project);
   return `<article class="cyber-project-card" data-category="${category}" data-project-id="${project.id}" style="--card-index:${index}">
+    <span class="cyber-project-card__selection-fx" aria-hidden="true"><i></i><i></i><i></i><i></i><b>PROJECT SELECTED</b></span>
     <div class="cyber-project-card__inner" id="project-card-${project.id}">
       <section class="cyber-project-card__face cyber-project-card__front" tabindex="0" role="button" aria-label="${project.title}，${ui.flip}" aria-expanded="false" aria-controls="project-back-${project.id}">
         <figure><img src="${project.image}" alt="${project.alt}" loading="lazy"></figure>
@@ -240,8 +241,6 @@ function projectCard(project,ui,index){
           <div><dt>${ui.role}</dt><dd>${project.role}</dd></div>
           <div><dt>${ui.mission}</dt><dd>${project.mission}</dd></div>
           <div><dt>${ui.actions}</dt><dd><ul>${project.actions.map(item=>`<li>${item}</li>`).join("")}</ul></dd></div>
-          <div><dt>${ui.result}</dt><dd>${project.result}</dd></div>
-          <div><dt>${ui.skills}</dt><dd class="cyber-project-card__skills">${project.skills.map(item=>`<span>${item}</span>`).join("")}</dd></div>
         </dl>
       </section>
     </div>
@@ -254,7 +253,7 @@ function setupProjectExplorer(t){
   if(!root||!deck)return;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches,coarse=matchMedia("(pointer: coarse)").matches;
   const total=cards.length;
-  let activeIndex=Math.min(2,total-1),flippedCardId=null,openCard=null,isTransitioning=false,ignoreClickUntil=0,hoverSelectLockedUntil=0,wheelLocked=false,transitionTimer=0,wheelTimer=0,autoTimer=0,autoPaused=false;
+  let activeIndex=Math.min(2,total-1),flippedCardId=null,isDragging=false,isSwitching=false,ignoreClickUntil=0,wheelLocked=false,transitionTimer=0,wheelTimer=0,selectionTimer=0;
   const circularOffset=(index,current)=>{
     let offset=index-current;
     if(offset>total/2)offset-=total;
@@ -263,10 +262,10 @@ function setupProjectExplorer(t){
   };
   const cardPose=offset=>{
     const distance=Math.abs(offset),side=Math.sign(offset);
-    if(distance===0)return{x:"0%",scale:1.08,rotate:"0deg",opacity:1,z:10};
-    if(distance===1)return{x:`${side*76}%`,scale:.88,rotate:`${side*-8}deg`,opacity:.76,z:6};
-    if(distance===2)return{x:`${side*128}%`,scale:.72,rotate:`${side*-13}deg`,opacity:.34,z:3};
-    return{x:`${side*154}%`,scale:.64,rotate:`${side*-16}deg`,opacity:0,z:0}
+    if(distance===0)return{x:"0%",y:"-16px",scale:1.43,rotate:"0deg",opacity:1,z:10};
+    if(distance===1)return{x:`${side*98}%`,y:"8px",scale:1.092,rotate:`${side*-6}deg`,opacity:.74,z:6};
+    if(distance===2)return{x:`${side*166}%`,y:"22px",scale:.888,rotate:`${side*-10}deg`,opacity:.36,z:3};
+    return{x:`${side*192}%`,y:"30px",scale:.768,rotate:`${side*-13}deg`,opacity:0,z:0}
   };
   const paintLayers=()=>{
     cards.forEach((card,index)=>{
@@ -276,83 +275,83 @@ function setupProjectExplorer(t){
       card.classList.toggle("is-center",offset===0);
       card.style.setProperty("--circular-offset",offset);
       card.style.setProperty("--card-x",pose.x);
+      card.style.setProperty("--card-y",pose.y);
       card.style.setProperty("--card-scale",pose.scale);
       card.style.setProperty("--card-rotate",pose.rotate);
       card.style.setProperty("--card-opacity",pose.opacity);
       card.style.setProperty("--card-z",pose.z);
       card.setAttribute("aria-hidden",distance>2?"true":"false");
-      card.querySelector(".cyber-project-card__front").tabIndex=distance>2?-1:0
+      card.querySelector(".cyber-project-card__front").tabIndex=distance>2?-1:0;
+      card.classList.toggle("is-flipped",card.dataset.projectId===flippedCardId)
     });
     dots.forEach((dot,index)=>{
       dot.classList.toggle("is-current",index===activeIndex);
       dot.setAttribute("aria-current",index===activeIndex?"true":"false");
     });
     root.style.setProperty("--active-index",activeIndex);
-    root.querySelector("[data-project-counter]")?.replaceChildren(document.createTextNode(`PROJECT ${String(activeIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")}`))
   };
-  const closeCard=card=>{
-    if(!card)return;
+  const closeFlipped=()=>{
+    if(!flippedCardId)return;
+    const card=cards.find(item=>item.dataset.projectId===flippedCardId);
+    if(!card){flippedCardId=null;root.classList.remove("has-active-card");return}
     card.querySelector(".cyber-project-card__inner").classList.remove("is-flipped");
-    card.classList.remove("is-active");
+    card.classList.remove("is-active","is-flipped");
     card.querySelector(".cyber-project-card__front").setAttribute("aria-expanded","false");
     card.querySelector(".cyber-project-card__back").setAttribute("aria-hidden","true");
-    if(openCard===card){openCard=null;flippedCardId=null;root.classList.remove("has-active-card")}
+    flippedCardId=null;
+    root.classList.remove("has-active-card")
+  };
+  const pulseSelection=()=>{
+    clearTimeout(selectionTimer);
+    root.classList.remove("selection-pulse");
+    cards.forEach(card=>card.classList.remove("is-selection-lock"));
+    void root.offsetWidth;
+    root.classList.add("selection-pulse");
+    cards[activeIndex]?.classList.add("is-selection-lock");
+    selectionTimer=setTimeout(()=>{
+      root.classList.remove("selection-pulse");
+      cards[activeIndex]?.classList.remove("is-selection-lock")
+    },reduced?80:940)
   };
   const selectCard=index=>{
-    if(!total||isTransitioning)return;
+    if(!total||isSwitching)return;
     const next=(index%total+total)%total;
     if(next===activeIndex)return;
-    if(openCard)closeCard(openCard);
     clearTimeout(transitionTimer);
-    isTransitioning=true;
+    isSwitching=true;
     root.classList.add("is-switching");
-    activeIndex=next;
-    paintLayers();
-    transitionTimer=setTimeout(()=>{isTransitioning=false;root.classList.remove("is-switching")},reduced?80:580)
+    const wasFlipped=Boolean(flippedCardId);
+    closeFlipped();
+    const moveToCenter=()=>{
+      activeIndex=next;
+      paintLayers();
+      transitionTimer=setTimeout(()=>{isSwitching=false;root.classList.remove("is-switching");pulseSelection()},reduced?80:620)
+    };
+    if(wasFlipped&&!reduced)requestAnimationFrame(()=>requestAnimationFrame(moveToCenter));
+    else moveToCenter()
   };
-  const stopAuto=()=>clearTimeout(autoTimer);
-  const scheduleAuto=()=>{
-    stopAuto();
-    if(reduced||autoPaused||document.hidden)return;
-    autoTimer=setTimeout(()=>{
-      if(openCard||isTransitioning||autoPaused||document.hidden){scheduleAuto();return}
-      selectCard(activeIndex+1);
-      scheduleAuto()
-    },5500)
-  };
-  const restartAuto=()=>{stopAuto();scheduleAuto()};
   const open=card=>{
-    restartAuto();
     if(performance.now()<ignoreClickUntil)return;
     const index=cards.indexOf(card);
     if(index!==activeIndex){selectCard(index);return}
-    if(isTransitioning)return;
-    if(openCard&&openCard!==card)closeCard(openCard);
+    if(isSwitching||isDragging)return;
     const inner=card.querySelector(".cyber-project-card__inner"),front=card.querySelector(".cyber-project-card__front"),back=card.querySelector(".cyber-project-card__back");
-    if(inner.classList.contains("is-flipped")){closeCard(card);return}
-    inner.classList.add("is-flipped");card.classList.add("is-active");root.classList.add("has-active-card");front.setAttribute("aria-expanded","true");back.setAttribute("aria-hidden","false");openCard=card;flippedCardId=card.dataset.projectId;
-    card.scrollIntoView({behavior:reduced?"auto":"smooth",block:"nearest",inline:"center"});
+    if(flippedCardId===card.dataset.projectId){closeFlipped();return}
+    closeFlipped();
+    flippedCardId=card.dataset.projectId;
+    inner.classList.add("is-flipped");card.classList.add("is-active","is-flipped");root.classList.add("has-active-card");front.setAttribute("aria-expanded","true");back.setAttribute("aria-hidden","false")
   };
   cards.forEach(card=>{
     const front=card.querySelector(".cyber-project-card__front"),back=card.querySelector(".cyber-project-card__back");
-    card.addEventListener("pointerenter",event=>{
-      if(coarse||event.pointerType==="touch"||openCard||performance.now()<hoverSelectLockedUntil)return;
-      const index=cards.indexOf(card);
-      if(index===activeIndex)return;
-      hoverSelectLockedUntil=performance.now()+820;
-      restartAuto();
-      selectCard(index)
-    });
-    front.addEventListener("click",()=>open(card));
     front.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();open(card)}});
-    card.querySelector(".cyber-project-card__close").addEventListener("click",event=>{event.stopPropagation();closeCard(card);front.focus()});
-    back.addEventListener("click",event=>{if(!event.target.closest("button")){closeCard(card);front.focus()}});
+    card.querySelector(".cyber-project-card__close").addEventListener("click",event=>{event.stopPropagation();closeFlipped();front.focus()});
+    back.addEventListener("click",event=>{if(!event.target.closest("button")){closeFlipped();front.focus()}});
     if(!coarse&&!reduced){
       front.addEventListener("pointermove",event=>{
-        if(card.classList.contains("is-active"))return;
+        if(cards.indexOf(card)!==activeIndex||flippedCardId||isDragging)return;
         const box=card.getBoundingClientRect(),x=(event.clientX-box.left)/box.width-.5,y=(event.clientY-box.top)/box.height-.5;
-        card.style.setProperty("--tilt-x",`${(-y*4).toFixed(2)}deg`);
-        card.style.setProperty("--tilt-y",`${(x*4).toFixed(2)}deg`);
+        card.style.setProperty("--tilt-x",`${(-y*6).toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y",`${(x*6).toFixed(2)}deg`);
         card.style.setProperty("--card-glow-x",`${((x+.5)*100).toFixed(1)}%`);
         card.style.setProperty("--card-glow-y",`${((y+.5)*100).toFixed(1)}%`);
       });
@@ -364,20 +363,28 @@ function setupProjectExplorer(t){
       });
     }
   });
+  deck.addEventListener("click",event=>{
+    if(event.target.closest(".cyber-project-card__back"))return;
+    const card=event.target.closest(".cyber-project-card");
+    if(card&&deck.contains(card))open(card)
+  });
   let pointerDown=false,dragStartX=0,dragStartY=0,dragDistance=0,horizontalDrag=false;
   deck.addEventListener("pointerdown",event=>{
     if(event.button!==undefined&&event.button!==0)return;
-    stopAuto();pointerDown=true;horizontalDrag=false;dragDistance=0;dragStartX=event.clientX;dragStartY=event.clientY;
-    deck.setPointerCapture?.(event.pointerId)
+    pointerDown=true;horizontalDrag=false;dragDistance=0;dragStartX=event.clientX;dragStartY=event.clientY
   });
   deck.addEventListener("pointermove",event=>{
     if(!pointerDown)return;
     const dx=event.clientX-dragStartX,dy=event.clientY-dragStartY;
     dragDistance=dx;
-    if(!horizontalDrag&&Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.15)horizontalDrag=true;
+    if(!horizontalDrag&&Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.15){
+      horizontalDrag=true;
+      deck.setPointerCapture?.(event.pointerId)
+    }
     if(horizontalDrag){
+      isDragging=true;
       deck.classList.add("is-dragging");
-      deck.style.setProperty("--drag-x",`${Math.max(-90,Math.min(90,dx*.28))}px`);
+      deck.style.setProperty("--drag-x",`${Math.max(-180,Math.min(180,dx*.62))}px`);
       event.preventDefault()
     }
   });
@@ -389,35 +396,43 @@ function setupProjectExplorer(t){
     deck.style.setProperty("--drag-x","0px");
     if(horizontalDrag){
       ignoreClickUntil=performance.now()+320;
-      if(Math.abs(dragDistance)>=60)selectCard(activeIndex+(dragDistance<0?1:-1))
+      if(Math.abs(dragDistance)>=60){
+        const cardStep=Math.max(90,deck.clientWidth*.18),steps=Math.max(1,Math.min(total-1,Math.round(Math.abs(dragDistance)/cardStep)));
+        selectCard(activeIndex+(dragDistance<0?steps:-steps))
+      }
     }
-    horizontalDrag=false;dragDistance=0;scheduleAuto()
+    isDragging=false;horizontalDrag=false;dragDistance=0
   };
   deck.addEventListener("pointerup",stopDrag);deck.addEventListener("pointercancel",stopDrag);
   deck.addEventListener("wheel",event=>{
-    const amount=Math.abs(event.deltaX)>Math.abs(event.deltaY)?event.deltaX:event.deltaY;
+    if(Math.abs(event.deltaX)<=Math.abs(event.deltaY))return;
+    const amount=event.deltaX;
     if(Math.abs(amount)<18||wheelLocked)return;
     event.preventDefault();
-    restartAuto();
     wheelLocked=true;
     selectCard(activeIndex+(amount>0?1:-1));
     clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>wheelLocked=false,520)
   },{passive:false});
-  dots.forEach((dot,index)=>dot.addEventListener("click",()=>{restartAuto();selectCard(index)}));
-  root.querySelector("[data-project-prev]")?.addEventListener("click",()=>{restartAuto();selectCard(activeIndex-1)});
-  root.querySelector("[data-project-next]")?.addEventListener("click",()=>{restartAuto();selectCard(activeIndex+1)});
+  dots.forEach((dot,index)=>dot.addEventListener("click",()=>selectCard(index)));
+  root.querySelector("[data-project-prev]")?.addEventListener("click",()=>selectCard(activeIndex-1));
+  root.querySelector("[data-project-next]")?.addEventListener("click",()=>selectCard(activeIndex+1));
   deck.addEventListener("keydown",event=>{
-    if(event.key==="ArrowLeft"){event.preventDefault();restartAuto();selectCard(activeIndex-1)}
-    if(event.key==="ArrowRight"){event.preventDefault();restartAuto();selectCard(activeIndex+1)}
+    if(event.key==="ArrowLeft"){event.preventDefault();selectCard(activeIndex-1)}
+    if(event.key==="ArrowRight"){event.preventDefault();selectCard(activeIndex+1)}
+    if(event.key==="Escape"&&flippedCardId){event.preventDefault();closeFlipped()}
     if((event.key==="Enter"||event.key===" ")&&event.target===deck){event.preventDefault();open(cards[activeIndex])}
   });
-  const visibilityAuto=()=>document.hidden?stopAuto():scheduleAuto();
-  document.addEventListener("visibilitychange",visibilityAuto);
+  let ambientObserver=null;
+  if("IntersectionObserver" in window){
+    ambientObserver=new IntersectionObserver(([entry])=>{
+      root.classList.toggle("is-ambient-paused",!entry.isIntersecting)
+    },{threshold:.04});
+    ambientObserver.observe(root)
+  }
   paintLayers();
-  scheduleAuto();
+  pulseSelection();
   projectExplorerCleanup=()=>{
-    stopAuto();clearTimeout(transitionTimer);clearTimeout(wheelTimer);
-    document.removeEventListener("visibilitychange",visibilityAuto)
+    clearTimeout(transitionTimer);clearTimeout(wheelTimer);clearTimeout(selectionTimer);ambientObserver?.disconnect()
   };
 }
 let contactCleanup=null;
@@ -471,7 +486,7 @@ function longExperienceMarkup(t){
   })[kind];
   return `<div class="long-experience-shell">
     <header class="long-experience-heading">
-      <span>02 / EXPERIENCE</span>
+      <span>03 / EXPERIENCE</span>
       <h2>${ui.title}</h2>
       <i aria-hidden="true"></i>
     </header>
@@ -484,7 +499,7 @@ function longExperienceMarkup(t){
         ${items.map(item=>`<button class="long-experience-node status-${item.status}${item.id===first.id?" is-active":""}" type="button" data-long-key="${item.id}" data-status="${item.status}" aria-label="${item.shortTitle||item.title} — ${item.statusLabel}" aria-pressed="${item.id===first.id}" ${item.id===first.id?'aria-current="true"':""} aria-controls="longExperienceDetail"><span class="long-node-core" aria-hidden="true"><i class="long-node-orbit"></i><i class="long-node-scan"></i><i class="long-node-center"></i></span><span class="long-node-copy"><b>${item.shortTitle||item.title}</b><small>${item.statusLabel}</small><i aria-hidden="true"></i></span></button>`).join("")}
       </nav>
       <article class="long-experience-panel status-${first.status}" id="longExperienceDetail" aria-live="polite">
-        <div class="long-panel-frame">
+        <div class="long-panel-frame"><i class="long-panel-scan" aria-hidden="true"></i>
           <div class="long-panel-inner">
             <div class="long-panel-top"><span>${ui.detail}</span><i aria-hidden="true"></i></div>
             <figure class="long-panel-image"><img data-long-image src="${first.image}" alt="${first.alt}" loading="lazy"><figcaption data-long-name>${first.shortTitle||first.title}</figcaption><span class="long-panel-status" data-long-status>${first.statusLabel}</span></figure>
@@ -508,15 +523,15 @@ function setupLongExperience(t){
   const items=t.longExperience,ui=t.longExperienceUi,nodes=[...track.querySelectorAll("[data-long-key]")],energy=track.querySelector(".long-track-energy");
   let active=items.some(x=>x.id===longExperienceActive)?longExperienceActive:items[0].id,visible=active;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const paint=key=>{
+  const paint=(key,immediate=false)=>{
     if(!key||key===visible)return;
     visible=key;
     const item=items.find(x=>x.id===key);if(!item)return;
     nodes.forEach(node=>{const on=node.dataset.longKey===key;node.classList.toggle("is-active",on);node.setAttribute("aria-pressed",String(on));if(on)node.setAttribute("aria-current","true");else node.removeAttribute("aria-current")});
     energy.style.setProperty("--energy-length",String([.23,.58,.94][items.indexOf(item)]));
-    panel.classList.add("is-switching");
+    panel.classList.toggle("is-switching",!immediate);
     clearTimeout(longExperienceTimer);
-    longExperienceTimer=setTimeout(()=>{
+    const updatePanel=()=>{
       const image=panel.querySelector("[data-long-image]");
       image.src=item.image;image.alt=item.alt;
       panel.classList.remove("status-completed","status-ongoing","status-upcoming");
@@ -530,21 +545,219 @@ function setupLongExperience(t){
       panel.querySelector("[data-long-impact]").textContent=item.impact;
       panel.querySelector("[data-long-duration]").textContent=item.duration;
       panel.classList.remove("is-switching");
-    },reduced?0:145);
+    };
+    if(immediate||reduced)updatePanel();
+    else longExperienceTimer=setTimeout(updatePanel,145);
   };
-  const selectNode=node=>{
+  const selectNode=(node,immediate=false)=>{
     active=node.dataset.longKey;
     longExperienceActive=active;
-    paint(active);
+    paint(active,immediate);
   };
   nodes.forEach(node=>{
     node.addEventListener("pointerenter",event=>{if(event.pointerType!=="touch")selectNode(node)});
     node.addEventListener("focus",()=>selectNode(node));
     node.addEventListener("click",()=>selectNode(node));
   });
-  longExperienceCleanup=()=>clearTimeout(longExperienceTimer);
+  let scrollScene=null;
+  if(window.gsap&&window.ScrollTrigger&&innerWidth>=900){
+    gsap.registerPlugin(ScrollTrigger);
+    scrollScene=ScrollTrigger.create({
+      id:"long-experience-scroll-scene",
+      trigger:section,
+      start:"top top",
+      end:()=>`+=${Math.round(innerHeight*1.65)}`,
+      pin:true,
+      pinSpacing:true,
+      anticipatePin:1,
+      invalidateOnRefresh:true,
+      onEnter:()=>{if(nodes[0])selectNode(nodes[0],true)},
+      onLeaveBack:()=>{if(nodes[0])selectNode(nodes[0],true)},
+      onUpdate:self=>{
+        const index=Math.min(items.length-1,Math.floor(self.progress*items.length));
+        const node=nodes[index];
+        if(node&&node.dataset.longKey!==active)selectNode(node,true);
+      },
+      onEnterBack:self=>{
+        const index=Math.min(items.length-1,Math.floor(self.progress*items.length));
+        if(nodes[index])selectNode(nodes[index],true);
+      }
+    });
+  }
+  let motionCleanup=()=>{};
+  if(window.gsap){
+    const mm=gsap.matchMedia();
+    mm.add({desktop:"(min-width:900px)",reduce:"(prefers-reduced-motion: reduce)"},context=>{
+      if(!context.conditions.desktop||context.conditions.reduce)return;
+      const image=panel.querySelector("[data-long-image]"),scan=panel.querySelector(".long-panel-scan");
+      const scanTween=gsap.fromTo(scan,{yPercent:-130,autoAlpha:0},{yPercent:920,autoAlpha:.42,duration:4.8,repeat:-1,repeatDelay:1.35,ease:"none"});
+      let frame=0,pointerX=.5,pointerY=.5;
+      const renderDepth=()=>{
+        const x=(pointerX-.5)*2,y=(pointerY-.5)*2;
+        gsap.to(panel,{rotationY:x*2.2,rotationX:-y*1.5,x:x*3,y:y*2,duration:.48,ease:"power2.out",overwrite:"auto",transformPerspective:1200,transformOrigin:"50% 50%"});
+        gsap.to(image,{x:-x*7,y:-y*5,scale:1.018,duration:.62,ease:"power2.out",overwrite:"auto"});
+        frame=0;
+      };
+      const move=event=>{
+        const bounds=panel.getBoundingClientRect();
+        pointerX=(event.clientX-bounds.left)/bounds.width;
+        pointerY=(event.clientY-bounds.top)/bounds.height;
+        if(!frame)frame=requestAnimationFrame(renderDepth);
+      };
+      const reset=()=>{
+        cancelAnimationFrame(frame);frame=0;
+        gsap.to(panel,{rotationX:0,rotationY:0,x:0,y:0,duration:.7,ease:"power3.out",overwrite:"auto"});
+        gsap.to(image,{x:0,y:0,scale:1,duration:.75,ease:"power3.out",overwrite:"auto"});
+      };
+      panel.addEventListener("pointermove",move);
+      panel.addEventListener("pointerleave",reset);
+      return ()=>{cancelAnimationFrame(frame);panel.removeEventListener("pointermove",move);panel.removeEventListener("pointerleave",reset);scanTween.kill();gsap.killTweensOf([panel,image,scan])};
+    });
+    motionCleanup=()=>mm.revert();
+  }
+  longExperienceCleanup=()=>{clearTimeout(longExperienceTimer);scrollScene?.kill();motionCleanup()};
 }
-let heroForegroundCleanup=null;
+
+/* Orbital Experience is an additive scene. The original long-experience DOM and
+   interaction above remain intact as a reversible legacy implementation. */
+let orbitalExperienceCleanup=null;
+function orbitalExperienceMarkup(t){
+  const items=t.longExperience,hubAssets=["experience-hub-beijing-v4.png","experience-hub-yuru-v4.png","experience-hub-aichi-v4.png"];
+  return `<div class="orbital-experience" data-orbital-experience>
+    <div class="orbital-experience__stage">
+      <img class="orbital-experience__universe" src="public/images/experience/experience-orbit-user-v4-2x.png" alt="" aria-hidden="true">
+      <div class="orbital-experience__shade" aria-hidden="true"></div>
+      <div class="orbital-experience__gold-route" aria-hidden="true"><i></i><i></i></div>
+      <header class="orbital-experience__heading compact-section-heading">
+        <span>03 / EXPERIENCE</span>
+        <small>${t.longExperienceUi.title}</small>
+        <i aria-hidden="true"></i>
+      </header>
+      <div class="orbital-experience__progress" aria-hidden="true"><i></i><b>01</b><b>02</b><b>03</b><em>PROJECTS</em></div>
+      <div class="orbital-experience__beacons" role="tablist" aria-label="${t.longExperienceUi.title}">
+        ${items.map((item,index)=>`<button type="button" role="tab" data-orbit-beacon="${index}" aria-selected="${index===0}" aria-controls="orbitMission${index}" aria-label="${item.shortTitle||item.title}"><img class="is-alpha-hub" src="public/images/experience/${hubAssets[index]}" alt=""><span><b>0${index+1}</b><strong>${item.shortTitle||item.title}</strong><small>${item.duration}</small></span></button>`).join("")}
+      </div>
+      <div class="orbital-experience__missions">
+        ${items.map((item,index)=>`<article class="orbital-mission${index===0?" is-active":""}" id="orbitMission${index}" data-orbit-mission="${index}" aria-hidden="${index!==0}">
+          <small>MISSION 0${index+1} · ${item.statusLabel}</small>
+          <h3>${item.shortTitle||item.title}</h3>
+          <p>${item.role}</p>
+          <dl><div><dt>${t.longExperienceUi.focus}</dt><dd>${item.focus}</dd></div><div><dt>${t.longExperienceUi.impact}</dt><dd>${item.impact}</dd></div></dl>
+          <time>${item.duration}</time>
+        </article>`).join("")}
+      </div>
+      <div class="orbital-experience__hint"><span>SCROLL</span><i></i><b>向下滚动 · 轨道向右转</b></div>
+      <div class="orbital-experience__exit" aria-hidden="true"><small>NEXT MISSION</small><strong>PROJECTS</strong><span>03 / PROJECT DECK</span></div>
+    </div>
+  </div>`;
+}
+function setupOrbitalExperience(){
+  orbitalExperienceCleanup?.();
+  const section=$("#experience"),root=section?.querySelector("[data-orbital-experience]"),stage=root?.querySelector(".orbital-experience__stage");
+  if(!root||!stage||!window.gsap||!window.ScrollTrigger)return;
+  const gsap=window.gsap,ScrollTrigger=window.ScrollTrigger,reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const universe=root.querySelector(".orbital-experience__universe"),missions=[...root.querySelectorAll("[data-orbit-mission]")],beacons=[...root.querySelectorAll("[data-orbit-beacon]")],progress=root.querySelector(".orbital-experience__progress i"),heading=root.querySelector(".orbital-experience__heading"),hint=root.querySelector(".orbital-experience__hint"),exit=root.querySelector(".orbital-experience__exit");
+  let activeIndex=0,orbitRx=0,orbitRy=0;
+  const measureOrbit=()=>{
+    orbitRx=stage.clientWidth*(innerWidth<=900?.34:.31);
+    orbitRy=stage.clientHeight*(innerWidth<=900?.2:.38);
+  };
+  const positionBeacons=sceneProgress=>{
+    const slots=[
+      {angle:175,scale:.82},
+      {angle:90,scale:1.05},
+      {angle:29,scale:.82}
+    ];
+    const stops=[
+      {p:0,slots:[1,0,2]},
+      {p:.13,slots:[1,0,2]},
+      {p:.4,slots:[2,1,0]},
+      {p:.58,slots:[0,2,1]}
+    ];
+    let from=stops[0],to=stops[1];
+    for(let index=1;index<stops.length;index++){
+      if(sceneProgress<=stops[index].p){from=stops[index-1];to=stops[index];break}
+      from=to=stops[index];
+    }
+    const segment=from===to?1:Math.max(0,Math.min(1,(sceneProgress-from.p)/(to.p-from.p)));
+    beacons.forEach((beacon,index)=>{
+      const start=slots[from.slots[index]],end=slots[to.slots[index]];
+      let endAngle=end.angle;
+      while(endAngle>=start.angle)endAngle-=360;
+      const delta=from===to?0:endAngle-start.angle;
+      const radians=(start.angle+delta*segment)*Math.PI/180;
+      const x=Math.cos(radians)*orbitRx;
+      const y=Math.sin(radians)*orbitRy;
+      const scale=start.scale+(end.scale-start.scale)*segment;
+      gsap.set(beacon,{x,y,scale,opacity:1,clearProps:"zIndex"});
+    });
+  };
+  const setActive=index=>{
+    const next=Math.max(0,Math.min(2,index));
+    if(next===activeIndex&&missions[next]?.classList.contains("is-active"))return;
+    activeIndex=next;
+    missions.forEach((mission,i)=>{const on=i===next;mission.classList.toggle("is-active",on);mission.setAttribute("aria-hidden",String(!on))});
+    beacons.forEach((beacon,i)=>beacon.setAttribute("aria-selected",String(i===next)));
+    section.dataset.orbitMission=String(next+1);
+  };
+  gsap.set(missions,{autoAlpha:0,xPercent:18,rotationY:-8,transformOrigin:"50% 50%"});
+  gsap.set(missions[0],{autoAlpha:1,xPercent:0,rotationY:0});
+  gsap.set(beacons,{xPercent:-50,yPercent:-50,rotation:0,transformOrigin:"50% 50%"});
+  measureOrbit();
+  positionBeacons(0);
+  gsap.set(exit,{autoAlpha:0,yPercent:16});
+  const tl=gsap.timeline({defaults:{ease:"none"},scrollTrigger:{
+    id:"orbital-experience",trigger:root,start:"top top",end:()=>`+=${Math.round(innerHeight*(reduced?1.5:3.25))}`,
+    pin:stage,pinSpacing:true,scrub:reduced?true:.6,anticipatePin:1,invalidateOnRefresh:true,
+    snap:reduced?false:{snapTo:[0,.13,.4,.58,.87,1],duration:{min:.12,max:.32},delay:.06,ease:"power1.inOut"},
+    onRefresh:self=>{measureOrbit();positionBeacons(self.progress)},
+    onUpdate:self=>{setActive(self.progress<.15?0:self.progress<.44?1:2);positionBeacons(self.progress);progress.style.transform=`scaleX(${self.progress})`}
+  }});
+  const turn=(from,to,at)=>{
+    tl.to(missions[from],{autoAlpha:0,xPercent:-22,rotationY:8,duration:.1},at)
+      .to(missions[to],{autoAlpha:1,xPercent:0,rotationY:0,duration:.11},at+.05);
+  };
+  tl.to(universe,{scale:1.005,duration:.12},0);
+  turn(0,1,.13);
+  turn(1,2,.4);
+  tl.to(hint,{autoAlpha:0,yPercent:20,duration:.08},.68)
+    .to(missions[2],{autoAlpha:0,xPercent:-24,duration:.11},.78)
+    .to(heading,{autoAlpha:0,xPercent:-8,duration:.1},.79)
+    .to(exit,{autoAlpha:1,yPercent:0,duration:.12},.82)
+    .to(universe,{xPercent:-2,scale:1.03,filter:"brightness(.5) saturate(.8)",duration:.18},.78)
+    .to(stage,{autoAlpha:.08,scale:.985,duration:.08},.94);
+  beacons.forEach((beacon,index)=>beacon.addEventListener("click",()=>{
+    const trigger=tl.scrollTrigger,start=trigger.start,end=trigger.end,target=start+(end-start)*[0,.29,.58][index];
+    scrollTo({top:target,behavior:reduced?"auto":"smooth"});
+  }));
+  const refresh=()=>ScrollTrigger.refresh();
+  universe.addEventListener("load",refresh,{once:true});
+  orbitalExperienceCleanup=()=>{tl.scrollTrigger?.kill();tl.kill();universe.removeEventListener("load",refresh)};
+}
+let chapterRouteCleanup=null;
+function setupChapterRoute(){
+  chapterRouteCleanup?.();
+  document.querySelector("[data-chapter-route]")?.remove();
+  if(!window.gsap||!window.ScrollTrigger)return;
+  document.body.insertAdjacentHTML("beforeend",`<div class="chapter-route" data-chapter-route aria-label="Portfolio chapter navigation">
+    <nav class="chapter-zone-rail">
+      <span class="chapter-zone-line" aria-hidden="true"><i></i></span>
+      <a href="#experience" data-zone-link="1"><small>ZONE</small><strong>01</strong><em>/ 03</em></a>
+      <a href="#projects" data-zone-link="2"><small>ZONE</small><strong>02</strong><em>/ 03</em></a>
+      <a href="#research" data-zone-link="3"><small>ZONE</small><strong>03</strong><em>/ 03</em></a>
+    </nav>
+    <div class="chapter-energy-route" aria-hidden="true"><i></i><b></b><span></span></div>
+  </div>`);
+  const root=document.querySelector("[data-chapter-route]"),fill=root.querySelector(".chapter-zone-line i"),links=[...root.querySelectorAll("[data-zone-link]")],energy=root.querySelector(".chapter-energy-route");
+  const gsap=window.gsap,ScrollTrigger=window.ScrollTrigger,triggers=[];
+  const setZone=zone=>links.forEach((link,index)=>link.classList.toggle("is-active",index===zone-1));
+  triggers.push(ScrollTrigger.create({trigger:"#experience",start:"top bottom",endTrigger:"#research",end:"bottom top",onToggle:self=>root.classList.toggle("is-visible",self.isActive)}));
+  triggers.push(ScrollTrigger.create({trigger:"#experience",start:"top center",endTrigger:"#research",end:"bottom center",scrub:true,onUpdate:self=>{gsap.set(fill,{scaleY:self.progress});energy.style.setProperty("--route-progress",self.progress)}}));
+  [["#experience",1],["#projects",2],["#research",3]].forEach(([selector,zone])=>triggers.push(ScrollTrigger.create({trigger:selector,start:"top center",end:"bottom center",onEnter:()=>setZone(zone),onEnterBack:()=>setZone(zone)})));
+  setZone(1);
+  chapterRouteCleanup=()=>{triggers.forEach(trigger=>trigger.kill());root.remove()};
+}
+let heroForegroundCleanup=null,heroEntryOpened=false;
 let heroMessageCleanup=null;
 function setupHeroMessage(t){
   if(heroMessageCleanup)heroMessageCleanup();
@@ -556,6 +769,20 @@ function setupHeroMessage(t){
   dialog.querySelector("[data-message-email]").textContent=copy.email;
   dialog.querySelector("[data-message-message]").textContent=copy.message;
   dialog.querySelector("[data-message-send]").textContent=copy.send;
+  const lang=document.documentElement.lang;
+  const placeholders=lang==="ja"
+    ?["お名前またはニックネーム","メールアドレスを入力","メッセージを入力してください…"]
+    :lang==="en"
+      ?["Enter your name or nickname","Enter your email address","Write your message here…"]
+      :["输入你的名字或昵称","输入你的邮箱地址","写下你的留言…"];
+  form.querySelector('input[name="name"]').placeholder=placeholders[0];
+  form.querySelector('input[name="email"]').placeholder=placeholders[1];
+  form.querySelector('textarea[name="message"]').placeholder=placeholders[2];
+  dialog.querySelector("[data-message-privacy]").textContent=lang==="ja"
+    ?"入力された情報は秘密として保護されます。"
+    :lang==="en"
+      ?"Your information will be kept confidential."
+      :"您的信息将被保密。";
   close.setAttribute("aria-label",copy.close);
   const open=()=>{status.textContent="";dialog.showModal();requestAnimationFrame(()=>dialog.classList.add("is-open"))};
   const dismiss=()=>{dialog.classList.remove("is-open");setTimeout(()=>dialog.open&&dialog.close(),180)};
@@ -596,7 +823,8 @@ function setupHeroForeground(){
   const hero=document.querySelector(".hero-video-intro"),title=hero?.querySelector(".hero-access-title");
   if(!hero||!title)return;
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let readyTimer=0,doneTimer=0,accessFrame=0;
+  const titleChars=[...title.querySelectorAll(".hero-title-char")],headset=title.querySelector(".hero-vr-headset"),headsetButton=title.querySelector(".hero-vr-headset-wrap");
+  let readyTimer=0,doneTimer=0,accessFrame=0,titleTimeline=null;
   const booted=sessionStorage.getItem("heroSystemBooted")==="true";
   hero.classList.remove("is-booting","hero-main-ready","hero-boot-complete","is-accessing","reduced-boot");
   if(reduced){
@@ -612,6 +840,22 @@ function setupHeroForeground(){
       hero.classList.add("hero-boot-complete");
     },1800);
   }
+  if(reduced){
+    gsap.set(titleChars,{autoAlpha:1,yPercent:0,rotationX:0,filter:"none"});
+    if(headset)gsap.set(headset,{autoAlpha:1,y:0,scale:1,rotation:0});
+  }else{
+    titleTimeline=gsap.timeline({delay:booted?.16:1.08,defaults:{ease:"power3.out"}});
+    gsap.set(titleChars,{autoAlpha:.26,yPercent:38,rotationX:-38,filter:"blur(4px)"});
+    if(headset)gsap.set(headset,{autoAlpha:0,y:18,scale:.76,rotation:-7});
+    const revealSteps=[...new Set(titleChars.map(char=>Number(char.dataset.revealStep)))].sort((a,b)=>a-b);
+    revealSteps.forEach((step,index)=>{
+      const stepChars=titleChars.filter(char=>Number(char.dataset.revealStep)===step);
+      const isAccessStep=stepChars.some(char=>char.classList.contains("hero-title-access-char"));
+      const at=index*.17;
+      titleTimeline.to(stepChars,{autoAlpha:1,yPercent:0,rotationX:0,filter:"blur(0px)",duration:.48,clearProps:"filter"},at);
+      if(isAccessStep&&headset)titleTimeline.to(headset,{autoAlpha:1,y:0,scale:1,rotation:0,duration:.54,ease:"back.out(1.55)"},at);
+    });
+  }
   const activate=()=>{
     if(reduced)return;
     cancelAnimationFrame(accessFrame);
@@ -626,7 +870,19 @@ function setupHeroForeground(){
   title.addEventListener("pointerleave",deactivate);
   title.addEventListener("focus",activate);
   title.addEventListener("blur",deactivate);
+  const enterPortfolio=()=>{
+    heroEntryOpened=true;
+    document.documentElement.classList.remove("hero-entry-locked");
+    hero.classList.add("hero-entry-open");
+    document.querySelector(".sport-reel")?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+  };
+  if(headsetButton&&!heroEntryOpened){
+    document.documentElement.classList.add("hero-entry-locked");
+    requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"auto"}));
+  }
+  headsetButton?.addEventListener("click",enterPortfolio);
   heroForegroundCleanup=()=>{
+    document.documentElement.classList.remove("hero-entry-locked");
     clearTimeout(readyTimer);
     clearTimeout(doneTimer);
     cancelAnimationFrame(accessFrame);
@@ -634,19 +890,355 @@ function setupHeroForeground(){
     title.removeEventListener("pointerleave",deactivate);
     title.removeEventListener("focus",activate);
     title.removeEventListener("blur",deactivate);
+    headsetButton?.removeEventListener("click",enterPortfolio);
+    titleTimeline?.kill();
+    gsap.killTweensOf([...titleChars,...(headset?[headset]:[])]);
   };
 }
+let chapterZoneRailCleanup=null;
+function setupChapterZoneRail(){
+  chapterZoneRailCleanup?.();
+  document.querySelector("[data-zone-rail]")?.remove();
+  if(innerWidth<900)return;
+  gsap.registerPlugin(ScrollTrigger);
+  const chapterLabels={
+    zh:["关于我","专业能力","经历","项目","研究"],
+    ja:["自己紹介","専門能力","経験","プロジェクト","研究"],
+    en:["ABOUT","PROFILE","EXPERIENCE","PROJECTS","RESEARCH"]
+  }[lang]||["ABOUT","PROFILE","EXPERIENCE","PROJECTS","RESEARCH"];
+  const chapters=["about","profile-framework","experience","projects","research"].map((id,index)=>({id,label:chapterLabels[index]}));
+  const rail=document.createElement("aside");
+  rail.className="chapter-zone-rail";
+  rail.dataset.zoneRail="";
+  rail.setAttribute("aria-label","Portfolio chapters");
+  rail.innerHTML=`<div class="chapter-zone-track" aria-hidden="true"><i></i></div>${chapters.map((chapter,index)=>`<a href="#${chapter.id}" data-zone-index="${index}" aria-label="${String(index+1).padStart(2,"0")} ${chapter.label}"><b>${String(index+1).padStart(2,"0")}</b><em>/ 0${chapters.length}</em><span>${chapter.label}</span></a>`).join("")}`;
+  document.body.appendChild(rail);
+  const links=[...rail.querySelectorAll("a")],progress=rail.querySelector(".chapter-zone-track i"),triggers=[];
+  const setActive=index=>links.forEach((link,i)=>{const active=i===index;link.classList.toggle("is-active",active);if(active)link.setAttribute("aria-current","true");else link.removeAttribute("aria-current")});
+  gsap.set(rail,{autoAlpha:0});
+  triggers.push(ScrollTrigger.create({trigger:"#about",start:"top 72%",endTrigger:"#research",end:"bottom bottom",onToggle:self=>gsap.set(rail,{autoAlpha:self.isActive?1:0})}));
+  const progressTween=gsap.to(progress,{scaleY:1,ease:"none",scrollTrigger:{trigger:"#about",start:"top center",endTrigger:"#research",end:"bottom center",scrub:.25}});
+  triggers.push(progressTween.scrollTrigger);
+  chapters.forEach((chapter,index)=>triggers.push(ScrollTrigger.create({trigger:`#${chapter.id}`,start:"top center",end:"bottom center",onToggle:self=>{if(self.isActive)setActive(index)}})));
+  const clickHandlers=links.map(link=>{const handler=event=>{event.preventDefault();document.querySelector(link.getAttribute("href"))?.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})};link.addEventListener("click",handler);return [link,handler]});
+  setActive(0);
+  requestAnimationFrame(()=>ScrollTrigger.refresh());
+  chapterZoneRailCleanup=()=>{triggers.forEach(trigger=>trigger?.kill());progressTween.kill();clickHandlers.forEach(([link,handler])=>link.removeEventListener("click",handler));gsap.killTweensOf(rail);rail.remove()};
+}
+// Temporary editing mode: set back to true when the ticket gate is restored.
+const REQUIRE_TICKET_TEAR_TO_CONTINUE=false;
+function setupTransitionTicket(){
+  const section=document.querySelector(".transition-ticket-section"),ticket=section?.querySelector(".transition-ticket"),stub=ticket?.querySelector(".transition-ticket__stub");
+  if(!ticket||!stub)return;
+  const liveDate=stub.querySelector("[data-ticket-current-date]");
+  if(liveDate){
+    const now=new Date();
+    const pad=value=>String(value).padStart(2,"0");
+    const currentDate=`${now.getFullYear()}.${pad(now.getMonth()+1)}.${pad(now.getDate())}`;
+    liveDate.textContent=currentDate;
+    liveDate.dateTime=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  }
+  if(ticket.dataset.ticketReady==="true")return;
+  ticket.dataset.ticketReady="true";
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const experience=document.querySelector("#experience");
+  let startX=0,dragging=false,readyToTear=false,torn=false,gateFrame=0,deniedTimer=0;
+  document.documentElement.classList.toggle("transition-gate-locked",REQUIRE_TICKET_TEAR_TO_CONTINUE);
+  const gateLimit=()=>Math.max(0,(experience?.offsetTop??section.offsetTop+section.offsetHeight)-innerHeight);
+  const deny=()=>{
+    section.classList.remove("is-gate-denied");
+    void section.offsetWidth;
+    section.classList.add("is-gate-denied");
+    clearTimeout(deniedTimer);
+    deniedTimer=window.setTimeout(()=>section.classList.remove("is-gate-denied"),650);
+  };
+  const enforceGate=()=>{
+    gateFrame=0;
+    if(torn)return;
+    const limit=gateLimit();
+    if(scrollY>limit+2){
+      scrollTo({top:limit,behavior:"auto"});
+      deny();
+    }
+  };
+  const watchGate=()=>{
+    if(!gateFrame)gateFrame=requestAnimationFrame(enforceGate);
+  };
+  if(REQUIRE_TICKET_TEAR_TO_CONTINUE){
+    addEventListener("scroll",watchGate,{passive:true});
+    document.addEventListener("click",event=>{
+      const link=event.target.closest('a[href="#experience"]');
+      if(!link||torn)return;
+      event.preventDefault();
+      section.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
+      deny();
+      stub.focus({preventScroll:true});
+    });
+  }
+  const arm=()=>{
+    ticket.classList.add("is-armed");
+    section.classList.add("is-armed");
+  };
+  if("IntersectionObserver" in window){
+    const ticketObserver=new IntersectionObserver(entries=>{
+      if(entries[0]?.isIntersecting){
+        arm();
+        ticketObserver.disconnect();
+      }
+    },{threshold:.28});
+    ticketObserver.observe(ticket);
+  }else arm();
+  const tear=()=>{
+    if(torn)return;
+    torn=true;
+    ticket.classList.add("is-tearing");
+    section.classList.add("is-tearing");
+    window.setTimeout(()=>{
+      document.documentElement.classList.remove("transition-gate-locked");
+      ticket.classList.remove("is-tearing");
+      ticket.classList.add("is-torn","is-complete");
+      section.classList.add("is-torn","is-complete");
+      ticket.setAttribute("aria-label","Access to Experience granted");
+    },reduced?0:760);
+    window.setTimeout(()=>{
+      experience?.classList.remove("ticket-entry");
+      void experience?.offsetWidth;
+      experience?.classList.add("ticket-entry");
+    },reduced?0:850);
+    window.setTimeout(()=>{
+      experience?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+    },reduced?0:980);
+  };
+  stub.addEventListener("click",tear);
+  stub.addEventListener("pointerdown",event=>{
+    if(event.button!==undefined&&event.button!==0)return;
+    event.preventDefault();
+    startX=event.clientX;
+    dragging=true;
+    readyToTear=false;
+    stub.setPointerCapture?.(event.pointerId);
+    section.classList.add("is-dragging");
+  });
+  stub.addEventListener("pointermove",event=>{
+    if(!dragging||torn)return;
+    const threshold=innerWidth<640?72:110,distance=Math.max(0,event.clientX-startX),progress=Math.min(100,Math.round(distance/threshold*100));
+    readyToTear=progress>=100;
+    stub.style.setProperty("--tear-drag",`${Math.min(distance,threshold+18)}px`);
+    ticket.style.setProperty("--tear-progress",String(progress/100));
+    section.classList.toggle("is-tear-ready",readyToTear);
+  });
+  const release=event=>{
+    if(!dragging)return;
+    const complete=readyToTear;
+    dragging=false;
+    readyToTear=false;
+    section.classList.remove("is-dragging");
+    section.classList.remove("is-tear-ready");
+    stub.releasePointerCapture?.(event.pointerId);
+    if(complete)tear();
+    else{
+      stub.style.removeProperty("--tear-drag");
+      ticket.style.removeProperty("--tear-progress");
+    }
+  };
+  stub.addEventListener("pointerup",release);
+  stub.addEventListener("pointercancel",release);
+  stub.addEventListener("lostpointercapture",release);
+  ticket.addEventListener("keydown",event=>{
+    if((event.key==="Enter"||event.key===" ")&&document.activeElement===ticket){
+      event.preventDefault();
+      stub.focus();
+    }
+  });
+}
+let tarotTransitionCleanup=null;
+function setupTarotTransition(){
+  if(tarotTransitionCleanup)tarotTransitionCleanup();
+  const section=$("#tarot-transition"),selected=section?.querySelector("[data-research-card]"),cards=[...section?.querySelectorAll(".tarot-card")||[]];
+  const sticky=section?.querySelector(".tarot-sticky"),heading=section?.querySelector(".tarot-heading"),stage=section?.querySelector(".tarot-stage"),space=section?.querySelector(".tarot-space"),signal=section?.querySelector(".tarot-signal"),ring=section?.querySelector(".tarot-ring"),deck=section?.querySelector(".tarot-deck");
+  if(!section||!selected||!sticky||!window.gsap||!window.ScrollTrigger)return;
+  const gsap=window.gsap,ScrollTrigger=window.ScrollTrigger,faces=cards.map(card=>card.querySelector(".tarot-project-face")),backs=cards.map(card=>card.querySelector(".tarot-back")),inners=cards.map(card=>card.querySelector(".tarot-card-inner")),others=cards.filter(card=>card!==selected);
+  gsap.registerPlugin(ScrollTrigger);
+  const media=gsap.matchMedia();
+  let timeline=null,drawTimeline=null,drawReady=false,drawn=false;
+  const setDrawReady=ready=>{
+    drawReady=ready&&!drawn;
+    section.classList.toggle("is-draw-ready",drawReady);
+    cards.forEach((card,index)=>{
+      card.tabIndex=drawReady?0:-1;
+      card.setAttribute("aria-hidden",drawReady?"false":"true");
+      card.setAttribute("aria-label",drawReady?`Draw tarot card ${index+1}`:"Transition card");
+    });
+  };
+  const syncState=()=>{
+    const progress=timeline?timeline.progress():0;
+    section.style.setProperty("--tarot-progress",progress.toFixed(3));
+    if(!drawn)section.dataset.phase=progress<.2?"gather":progress<.45?"shuffle":progress<.69?"spread":"draw-ready";
+    section.classList.toggle("is-active",progress>0&&progress<1);
+  };
+  media.add({desktop:"(min-width: 701px)",mobile:"(max-width: 700px)",reduce:"(prefers-reduced-motion: reduce)"},context=>{
+    const {mobile,reduce}=context.conditions,gap=mobile?46:Math.max(58,Math.min(112,innerWidth*.072)),split=reduce?0:(mobile?42:88),lift=mobile?-66:-92,finalLift=mobile?-76:-108;
+    gsap.set(cards,{x:index=>(index-3)*gap,y:index=>Math.abs(index-3)*8,z:index=>(3-Math.abs(index-3))*15,rotation:index=>(index-3)*4.8,scale:index=>1-Math.abs(index-3)*.038,opacity:index=>1-Math.abs(index-3)*.055,force3D:true});
+    gsap.set(faces,{autoAlpha:1,filter:"blur(0px) brightness(1)"});
+    gsap.set(backs,{autoAlpha:0});
+    gsap.set(inners,{rotationY:0,transformStyle:"preserve-3d"});
+    gsap.set([space,heading,stage,signal],{clearProps:"visibility"});
+    timeline=gsap.timeline({defaults:{ease:"none"},onUpdate:syncState,scrollTrigger:{id:"tarot-transition",trigger:section,start:"top top",end:()=>`+=${Math.round(innerHeight*(mobile?1.7:2.15))}`,pin:sticky,pinSpacing:true,scrub:reduce?true:.45,anticipatePin:1,invalidateOnRefresh:true,onUpdate:self=>{
+      const progress=timeline?.progress()||0;
+      if(progress>=.69&&!drawn){
+        setDrawReady(true);
+        const lockAt=self.start+(self.end-self.start)*.72;
+        if(self.scroll()>lockAt+2)self.scroll(lockAt)
+      }else if(progress<.67&&!drawn)setDrawReady(false)
+    }}});
+    timeline.addLabel("collect",0)
+      .to(cards,{x:index=>(index-3)*2,y:index=>Math.abs(index-3)*2,z:index=>index*-4,rotation:0,scale:.95,duration:.2,ease:"power3.inOut"},"collect")
+      .addLabel("shuffle",.2)
+      .to(faces,{autoAlpha:0,filter:"blur(6px) brightness(.3)",duration:.25,ease:"power2.inOut"},"shuffle")
+      .to(backs,{autoAlpha:1,duration:.25,ease:"power2.inOut"},"shuffle")
+      .to(cards,{x:index=>(index%2?1:-1)*split+(index-3)*3,y:index=>(index%3-1)*(reduce?0:30),z:index=>(index%2?75:-38),rotation:index=>(index%2?1:-1)*(reduce?0:8),duration:.075,ease:"power2.inOut",stagger:{amount:.018,from:"center"}},"shuffle")
+      .to(cards,{x:index=>(index%2?-1:1)*split*.78,y:index=>(1-index%3)*(reduce?0:24),z:index=>(index%2?-45:92),rotation:index=>(index%2?-1:1)*(reduce?0:6),duration:.075,ease:"power2.inOut",stagger:{amount:.018,from:"edges"}},.275)
+      .to(cards,{x:index=>(index-3)*2,y:index=>Math.abs(index-3)*2,z:index=>index*-4,rotation:0,duration:.1,ease:"power3.inOut",stagger:{amount:.015,from:"center"}},.35)
+      .addLabel("spread",.45)
+      .to(cards,{x:index=>(index-3)*gap*1.06,y:index=>Math.abs(index-3)*6,z:index=>(3-Math.abs(index-3))*18,rotation:index=>(index-3)*2.6,scale:index=>1-Math.abs(index-3)*.028,opacity:index=>1-Math.abs(index-3)*.045,duration:.25,ease:"power3.inOut",stagger:{amount:.025,from:"center"}},"spread")
+      .addLabel("choose",.7)
+      .to({hold:0},{hold:1,duration:.3},"choose");
+    const drawCard=card=>{
+      if(!drawReady||drawn)return;
+      drawn=true;setDrawReady(false);section.dataset.phase="reveal";section.classList.add("is-drawing");card.classList.add("is-chosen");
+      const unchosen=cards.filter(item=>item!==card),inner=card.querySelector(".tarot-card-inner");
+      gsap.set(card,{zIndex:80});
+      drawTimeline=gsap.timeline({defaults:{overwrite:"auto"},onComplete:()=>{
+        section.classList.add("is-drawn");
+        section.classList.add("is-exiting");
+        const transitionTrigger=timeline?.scrollTrigger;
+        transitionTrigger?.kill(true,true);
+        ScrollTrigger.refresh();
+        const research=document.querySelector("#research");
+        if(!research)return;
+        const researchTop=research.getBoundingClientRect().top+scrollY;
+        scrollTo({top:researchTop,behavior:"auto"});
+      }})
+        .to(unchosen,{y:"+=30",z:-80,scale:.74,autoAlpha:0,duration:reduce ? .2 : .48,ease:"power3.in",stagger:{amount:reduce ? 0 : .08,from:"center"}},0)
+        .to(card,{x:0,y:lift,z:210,rotation:0,scale:1.2,autoAlpha:1,duration:reduce ? .25 : .55,ease:"power3.inOut"},0)
+        .to(heading,{autoAlpha:.12,y:-18,duration:reduce ? .18 : .35,ease:"power2.inOut"},0)
+        .to(signal,{autoAlpha:0,y:14,duration:reduce ? .15 : .28,ease:"power2.in"},0)
+        .to(ring,{filter:"brightness(1.65)",scale:1.08,duration:reduce ? .2 : .34,yoyo:true,repeat:1,ease:"power2.inOut"},.08)
+        .to(card,{y:finalLift,z:230,scale:1.26,duration:reduce ? .2 : .42,ease:"power2.inOut"},reduce ? .15 : .34)
+        .to(inner,{rotationY:180,duration:reduce ? .25 : .62,ease:"power3.inOut"},reduce ? .2 : .38)
+        .to(heading,{autoAlpha:0,y:-26,duration:reduce ? .15 : .25,ease:"power2.in"},reduce ? .32 : .68)
+    };
+    const onCardClick=event=>{const card=event.target.closest(".tarot-card");if(card)drawCard(card)};
+    deck.addEventListener("click",onCardClick);
+    syncState();
+    return()=>{deck.removeEventListener("click",onCardClick);drawTimeline?.kill();timeline?.scrollTrigger?.kill();timeline?.kill();timeline=null};
+  });
+  requestAnimationFrame(()=>ScrollTrigger.refresh());
+  tarotTransitionCleanup=()=>{media.revert();drawTimeline?.kill();ScrollTrigger.getById("tarot-transition")?.kill();gsap.killTweensOf([...cards,...faces,...backs,...inners,heading,signal,ring])};
+}
+const researchSignalCopy={
+  zh:{eyebrow:"04B / RESEARCH SIGNAL",title:"研究信号",subtitle:"从调查数据到可解释的体育消费者洞察",status:"SIGNAL SYNTHESIS // LIVE",metric:"357",metricLabel:"有效样本",location:"长野",locationLabel:"实地调查",language:"中・日・英",languageLabel:"问卷语言",risk:"风险维度",riskValue:"05",model:"分析模型",modelValue:"CFA / SEM",output:"研究输出",outputValue:"重游意愿",nodes:[{title:"调查设计",body:"围绕访日外国雪上运动游客构建多语言问卷。",value:"SURVEY"},{title:"实地采集",body:"在长野雪场获取真实体育旅游体验数据。",value:"FIELD"},{title:"风险识别",body:"聚焦语言、天气、身体、财务与时间风险。",value:"RISK 05"},{title:"结构验证",body:"使用 CFA 检验测量结构与变量关系。",value:"CFA"},{title:"路径分析",body:"通过 SEM 解释感知风险如何影响重游意愿。",value:"SEM"},{title:"洞察转化",body:"把统计结果转化为雪场与体育旅游运营建议。",value:"INSIGHT"}],hint:"选择山脊上的研究节点查看信号"},
+  ja:{eyebrow:"04B / RESEARCH SIGNAL",title:"リサーチ・シグナル",subtitle:"調査データから解釈可能なスポーツ消費者インサイトへ",status:"SIGNAL SYNTHESIS // LIVE",metric:"357",metricLabel:"有効回答",location:"長野",locationLabel:"現地調査",language:"中・日・英",languageLabel:"質問紙言語",risk:"リスク次元",riskValue:"05",model:"分析モデル",modelValue:"CFA / SEM",output:"研究成果",outputValue:"再訪意向",nodes:[{title:"調査設計",body:"訪日外国人スノースポーツ観光客向けの多言語質問紙を設計。",value:"SURVEY"},{title:"現地収集",body:"長野のスキー場で実際の観光体験データを収集。",value:"FIELD"},{title:"リスク特定",body:"言語・天候・身体・財務・時間のリスクに着目。",value:"RISK 05"},{title:"構造検証",body:"CFAで測定構造と変数関係を検証。",value:"CFA"},{title:"パス分析",body:"SEMで知覚リスクが再訪意向に与える影響を分析。",value:"SEM"},{title:"洞察変換",body:"統計結果をスキー場とスポーツツーリズムの改善提案へ。",value:"INSIGHT"}],hint:"山稜の研究ノードを選択してシグナルを確認"},
+  en:{eyebrow:"04B / RESEARCH SIGNAL",title:"RESEARCH SIGNAL",subtitle:"From field data to interpretable sport-consumer insight",status:"SIGNAL SYNTHESIS // LIVE",metric:"357",metricLabel:"VALID RESPONSES",location:"NAGANO",locationLabel:"FIELD STUDY",language:"ZH · JA · EN",languageLabel:"SURVEY LANGUAGES",risk:"RISK DIMENSIONS",riskValue:"05",model:"ANALYSIS MODEL",modelValue:"CFA / SEM",output:"RESEARCH OUTPUT",outputValue:"REVISIT INTENT",nodes:[{title:"Survey Design",body:"A multilingual questionnaire built for international snow-sport visitors.",value:"SURVEY"},{title:"Field Collection",body:"First-hand sport-tourism data collected at a Nagano ski destination.",value:"FIELD"},{title:"Risk Mapping",body:"Language, weather, physical, financial and time risks identified.",value:"RISK 05"},{title:"Structure Check",body:"CFA validates the measurement structure and construct relationships.",value:"CFA"},{title:"Path Analysis",body:"SEM explains how perceived risk shapes revisit intention.",value:"SEM"},{title:"Insight Translation",body:"Statistical results become actionable recommendations for operators.",value:"INSIGHT"}],hint:"SELECT A RIDGE NODE TO INSPECT THE SIGNAL"}
+};
+function researchSignalMarkup(copy){
+  const nodes=copy.nodes.map((node,index)=>`<button class="research-signal-node" type="button" data-signal-node="${index}" aria-label="${node.title}" aria-pressed="${index===0}"><span>${String(index+1).padStart(2,"0")}</span></button>`).join("");
+  return `<div class="research-signal-shell">
+    <img class="research-signal-mountain" src="public/images/research-signal/research-signal-mountain.png" alt="${copy.title}">
+    <div class="research-signal-vignette" aria-hidden="true"></div>
+    <header class="research-signal-header"><div class="compact-section-heading"><span id="researchSignalTitle">${copy.eyebrow}</span><small>${lang==="zh"?"研究":lang==="ja"?"研究":"Research"}</small><i aria-hidden="true"></i></div><p>${copy.subtitle}</p></header>
+    <aside class="research-signal-rail research-signal-rail--left" aria-label="Research field metrics">
+      <article><small>DATA / 01</small><strong>${copy.metric}</strong><span>${copy.metricLabel}</span></article>
+      <article><small>FIELD / 02</small><strong>${copy.location}</strong><span>${copy.locationLabel}</span></article>
+      <article><small>LANG / 03</small><strong>${copy.language}</strong><span>${copy.languageLabel}</span></article>
+    </aside>
+    <aside class="research-signal-rail research-signal-rail--right" aria-label="Research analysis metrics">
+      <article><small>${copy.risk}</small><strong>${copy.riskValue}</strong><span class="research-signal-bars"><i></i><i></i><i></i><i></i><i></i></span></article>
+      <article><small>${copy.model}</small><strong>${copy.modelValue}</strong><span>SPSS · Mplus</span></article>
+      <article><small>${copy.output}</small><strong>${copy.outputValue}</strong><span>INSIGHT / 100%</span></article>
+    </aside>
+    <div class="research-signal-nodes" role="group" aria-label="Research signal nodes">${nodes}</div>
+    <div class="research-signal-beam" aria-hidden="true"><i></i><i></i></div>
+    <article class="research-signal-insight" aria-live="polite"><small>${copy.hint}</small><strong data-signal-value>${copy.nodes[0].value}</strong><h3 data-signal-title>${copy.nodes[0].title}</h3><p data-signal-body>${copy.nodes[0].body}</p></article>
+    <div class="research-signal-exit" aria-hidden="true"><span>SIGNAL ROUTED TO PROFILE</span><i></i></div>
+  </div>`;
+}
+let researchSignalCleanup=null;
+function setupResearchSignal(){
+  if(researchSignalCleanup)researchSignalCleanup();
+  const section=$("#research-signal"),shell=section?.querySelector(".research-signal-shell"),mountain=section?.querySelector(".research-signal-mountain"),header=section?.querySelector(".research-signal-header"),rails=[...section?.querySelectorAll(".research-signal-rail article")||[]],nodes=[...section?.querySelectorAll("[data-signal-node]")||[]],beam=section?.querySelector(".research-signal-beam"),insight=section?.querySelector(".research-signal-insight"),exit=section?.querySelector(".research-signal-exit");
+  if(!section||!shell||!window.gsap)return;
+  const copy=researchSignalCopy[lang],titleEl=section.querySelector("[data-signal-title]"),bodyEl=section.querySelector("[data-signal-body]"),valueEl=section.querySelector("[data-signal-value]");
+  const cleanups=[];
+  const activate=index=>{
+    const item=copy.nodes[index];if(!item)return;
+    nodes.forEach((node,i)=>{const active=i===index;node.classList.toggle("is-active",active);node.setAttribute("aria-pressed",String(active))});
+    insight.classList.remove("is-updating");void insight.offsetWidth;insight.classList.add("is-updating");
+    titleEl.textContent=item.title;bodyEl.textContent=item.body;valueEl.textContent=item.value;
+  };
+  nodes.forEach((node,index)=>{const select=()=>activate(index);node.addEventListener("click",select);node.addEventListener("pointerenter",select);cleanups.push(()=>{node.removeEventListener("click",select);node.removeEventListener("pointerenter",select)})});
+  activate(0);
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let entered=false,observer=null,ambient=[];
+  let insightX=null,insightY=null;
+  const followsPointer=matchMedia("(min-width: 901px) and (hover: hover) and (prefers-reduced-motion: no-preference)").matches;
+  const moveInsight=event=>{
+    if(!insightX||!insightY)return;
+    insightX((event.clientX/innerWidth-.5)*34);
+    insightY((event.clientY/innerHeight-.5)*38);
+  };
+  const resetInsight=()=>{insightX?.(0);insightY?.(0)};
+  if(followsPointer){
+    insightX=gsap.quickTo(insight,"x",{duration:.42,ease:"power3.out"});
+    insightY=gsap.quickTo(insight,"y",{duration:.42,ease:"power3.out"});
+    shell.addEventListener("pointermove",moveInsight,{passive:true});
+    shell.addEventListener("pointerleave",resetInsight);
+  }
+  if(reduced){gsap.set([header,...rails,nodes,beam,insight,exit],{clearProps:"all"});section.classList.add("is-signal-ready")}
+  else{
+    gsap.set(header,{autoAlpha:0,y:-22});gsap.set(rails,{autoAlpha:0,x:index=>index<3?-28:28});gsap.set(nodes,{autoAlpha:0,scale:.65});gsap.set(beam,{autoAlpha:0,scaleY:.12,transformOrigin:"50% 100%"});gsap.set(insight,{autoAlpha:0,y:24});gsap.set(exit,{autoAlpha:0,y:16});
+    const enter=()=>{
+      if(entered)return;entered=true;section.classList.add("is-signal-ready");
+      gsap.to(header,{autoAlpha:1,y:0,duration:.75,ease:"power3.out"});
+      gsap.to(rails,{autoAlpha:1,x:0,duration:.7,stagger:.07,ease:"power3.out"});
+      gsap.to(nodes,{autoAlpha:1,scale:1,duration:.52,stagger:{amount:.5,from:"end"},ease:"back.out(1.7)"});
+      gsap.to(beam,{autoAlpha:1,scaleY:1,duration:1.15,ease:"power3.inOut"});
+      gsap.to(insight,{autoAlpha:1,y:0,duration:.7,delay:.48,ease:"power3.out"});
+      gsap.to(exit,{autoAlpha:1,y:0,duration:.6,delay:.75,ease:"power2.out"});
+      ambient.push(gsap.to(mountain,{scale:1.035,duration:11,yoyo:true,repeat:-1,ease:"sine.inOut"}),gsap.to(nodes,{filter:"brightness(1.35)",duration:1.8,yoyo:true,repeat:-1,stagger:{each:.18,repeat:-1,yoyo:true},ease:"sine.inOut"}));
+    };
+    observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting)enter()},{threshold:.16});observer.observe(section);
+  }
+  researchSignalCleanup=()=>{observer?.disconnect();cleanups.forEach(fn=>fn());ambient.forEach(tween=>tween.kill());shell.removeEventListener("pointermove",moveInsight);shell.removeEventListener("pointerleave",resetInsight);gsap.killTweensOf([header,...rails,...nodes,beam,insight,exit,mountain])};
+}
 function render(){
-  const t=D[lang],ids=["about","experience","projects","research","skills","contact"],projectLabel={zh:"项目",ja:"プロジェクト",en:"Projects"}[lang];
+  orbitalExperienceCleanup?.();
+  chapterRouteCleanup?.();
+  researchSignalCleanup?.();
+  document.querySelector("[data-chapter-route]")?.remove();
+  const t=D[lang],ids=["about","skills","experience","projects","research","contact"],projectLabel={zh:"项目",ja:"プロジェクト",en:"Projects"}[lang];
   document.documentElement.lang=lang==="zh"?"zh-CN":lang;
-  const navItems=[t.nav[0],t.nav[2],projectLabel,t.nav[3],t.nav[5],t.nav[6]];$("nav").innerHTML=navItems.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join("");
+  const navItems=[t.nav[0],t.nav[5],t.nav[2],projectLabel,t.nav[3],t.nav[6]];$("nav").innerHTML=navItems.map((x,i)=>`<a href="#${ids[i]}">${x}</a>`).join("");
   $(".langs").innerHTML=["zh","ja","en"].map(x=>`<button data-lang="${x}" class="${x===lang?"active":""}" aria-pressed="${x===lang}">${x==="zh"?"中":x==="ja"?"日":"EN"}</button>`).join("");
-  $(".hero-content").innerHTML=`<div class="hero-access-title" tabindex="0"><h1><span>${t.heroAccessTitle[0]}</span><span>${t.heroAccessTitle[1]}</span></h1><span class="hero-title-scan" aria-hidden="true"></span><i class="hero-corner hero-corner-tl" aria-hidden="true"></i><i class="hero-corner hero-corner-tr" aria-hidden="true"></i><i class="hero-corner hero-corner-br" aria-hidden="true"></i><i class="hero-corner hero-corner-bl" aria-hidden="true"></i><small>ACCESS GRANTED</small></div>`;
+  let heroRevealStep=0;
+  const heroChars=(text,sharedStep=null,extraClass="")=>[...text].map(char=>`<span class="hero-title-char ${extraClass}" data-reveal-step="${sharedStep??heroRevealStep++}">${char===" "?"&nbsp;":char}</span>`).join("");
+  const heroLine=(text,index)=>{
+    if(lang==="zh"&&index===0&&text.includes("接入")){
+      const [before,after]=text.split("接入");
+      const beforeMarkup=heroChars(before);
+      const accessStep=heroRevealStep++;
+      const enterHint={zh:"点击眼镜进入",ja:"ゴーグルをクリック",en:"CLICK HEADSET TO ENTER"}[lang];
+      return `${beforeMarkup}<span class="hero-vr-anchor"><button class="hero-vr-headset-wrap" type="button" aria-label="${enterHint}"><img class="hero-vr-headset" src="public/images/metaverse/vr-headset-enter.png" alt="" draggable="false"><span class="hero-vr-entry-hint">${enterHint}<i aria-hidden="true">↘</i></span></button>${heroChars("接入",accessStep,"hero-title-access-char")}</span>${heroChars(after)}`;
+    }
+    return heroChars(text);
+  };
+  $(".hero-content").innerHTML=`<div class="hero-access-title" tabindex="0"><h1><span class="hero-title-line">${heroLine(t.heroAccessTitle[0],0)}</span><span class="hero-title-line">${heroLine(t.heroAccessTitle[1],1)}</span></h1><span class="hero-title-scan" aria-hidden="true"></span><i class="hero-corner hero-corner-tl" aria-hidden="true"></i><i class="hero-corner hero-corner-tr" aria-hidden="true"></i><i class="hero-corner hero-corner-br" aria-hidden="true"></i><i class="hero-corner hero-corner-bl" aria-hidden="true"></i><small>ACCESS GRANTED</small></div>`;
   $("#about").className="section reveal about-premium";
   $("#about").innerHTML=aboutSection(aboutCopy[lang]);
   $("#experience").className="section reveal long-experience-section";
   $("#experience").innerHTML=longExperienceMarkup(t);
-  $("#projects").innerHTML=`<div class="cyber-projects"><header class="cyber-projects__head compact-section-heading"><span>03 / PROJECTS</span><small>${t.projectUi.title}</small><i aria-hidden="true"></i></header><div class="cyber-project-deck-shell"><button class="cyber-project-arrow is-prev" type="button" data-project-prev aria-label="Previous project"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M20.5 6 10.5 16l10 10M11 16h15"/></svg></button><div class="cyber-project-grid cyber-project-deck" data-project-deck tabindex="0" role="group" aria-label="Project character selection">${t.projects.map((project,index)=>projectCard(project,t.projectUi,index)).join("")}</div><button class="cyber-project-arrow is-next" type="button" data-project-next aria-label="Next project"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m11.5 6 10 10-10 10M21 16H6"/></svg></button><div class="cyber-project-hologram" aria-hidden="true"><i></i><i></i><i></i></div></div><div class="cyber-project-instructions"><span class="desktop-project-hint">◎ ${t.projectUi.hover}</span><span>↻ ${t.projectUi.flip}</span><span class="desktop-project-hint">↔ ${t.projectUi.drag}</span><span class="mobile-project-hint">↔ ${t.projectUi.swipe}</span><span class="mobile-project-hint">↻ ${t.projectUi.tap}</span></div></div>`;
+  $("#projects").innerHTML=`<div class="cyber-projects"><header class="cyber-projects__head compact-section-heading"><span>03 / PROJECTS</span><small>${t.projectUi.title}</small><i aria-hidden="true"></i></header><div class="cyber-project-deck-shell"><button class="cyber-project-arrow is-prev" type="button" data-project-prev aria-label="Previous project"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M20.5 6 10.5 16l10 10M11 16h15"/></svg></button><div class="cyber-project-grid cyber-project-deck" data-project-deck tabindex="0" role="group" aria-label="Project character selection">${t.projects.map((project,index)=>projectCard(project,t.projectUi,index)).join("")}</div><button class="cyber-project-arrow is-next" type="button" data-project-next aria-label="Next project"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m11.5 6 10 10-10 10M21 16H6"/></svg></button><div class="cyber-project-hologram" aria-hidden="true"><span class="hologram-beam"></span><i class="hologram-ring hologram-ring--outer"></i><i class="hologram-ring hologram-ring--lock"></i><i class="hologram-ring hologram-ring--data"></i><i class="hologram-ring hologram-ring--inner"></i><b class="hologram-core"></b><em class="hologram-shadow"></em></div></div><div class="cyber-project-selector"><span>PROJECT SELECTED</span><div class="cyber-project-selector__dots" role="group" aria-label="Project selection">${t.projects.map((_,index)=>`<button type="button" data-project-dot aria-label="Select project ${index+1}">${String(index+1).padStart(2,"0")}</button>`).join("")}</div></div><div class="cyber-project-instructions"><span class="desktop-project-hint">SELECT SIDE CARD</span><span>↻ ${t.projectUi.flip}</span><span class="desktop-project-hint">↔ ${t.projectUi.drag}</span><span class="mobile-project-hint">SWIPE TO SELECT</span><span class="mobile-project-hint">TAP TO VIEW DETAILS</span></div></div>`;
+  $("#projects .cyber-projects__head>span").textContent="04 / PROJECTS";
   const researchFlow={
     zh:[["研究对象","访日外国雪上运动游客"],["核心风险","语言 / 天气 / 身体 / 财务 / 时间"],["结果","重游意愿"],["方法","问卷调查 + CFA / SEM"]],
     ja:[["研究対象","訪日外国人スノースポーツ観光客"],["中核リスク","言語 / 天候 / 身体 / 財務 / 時間"],["結果","再訪意向"],["方法","質問紙調査 + CFA / SEM"]],
@@ -675,11 +1267,12 @@ function render(){
   <image class="research-lit-frame" href="public/images/research/night-ski-lit-clean.webp" width="${scene.viewBox.width}" height="${scene.viewBox.height}" preserveAspectRatio="xMidYMid slice" mask="url(#researchLitReveal)"/>
   <path id="researchSkiPath" d="${scene.path}" fill="none"/>
   </svg><div class="research-bg-shade"></div><div class="research-grain" aria-hidden="true"></div></div><div class="research-interaction" role="application" aria-label="点击雪道以点亮对应区域" tabindex="0"></div><div class="research-click-ripple" aria-hidden="true"></div><img class="research-pangoo-cursor" src="public/images/research/pangoo-skier.png" alt="" aria-hidden="true"><header class="compact-section-heading research-compact-heading"><span>04 / RESEARCH</span><small>${{zh:"研究",ja:"研究",en:"Research"}[lang]}</small><i aria-hidden="true"></i></header><div class="research-documentary"><div class="research-copy"><small>${t.researchEn}</small><h3>${t.researchName}</h3><p>${t.researchBody}</p></div><div class="research-flow">${researchFlow.map((x,i)=>`<article><span>0${i+1}</span><div><b>${x[0]}</b><p>${x[1]}</p></div></article>`).join("")}</div><div class="research-stats">${researchStatCards.map((x,i)=>`<article><small>0${i+1}</small><b>${x[0]}</b><span>${x[1]}</span></article>`).join("")}</div><div class="research-tags">${researchTags.map(x=>`<span>${x}</span>`).join("")}</div></div>`;
+  $("#research .research-compact-heading>span").textContent="05 / RESEARCH";
   const frameworkCopy=t.profileFramework;
   const frameworkUi=window.SKILLS_UI[lang];
   $(".profile-framework-head").innerHTML="";
   $("#skills").innerHTML=profileFrameworkMarkup(frameworkCopy,frameworkUi);
-  $(".profile-framework .skills-section-index").innerHTML=`<span>05 / PROFILE</span><small>${t.skillsTitle}</small><i aria-hidden="true"></i>`;
+  $(".profile-framework .skills-section-index").innerHTML=`<span>02 / PROFILE</span><small>${t.skillsTitle}</small><i aria-hidden="true"></i>`;
   $("#contact").innerHTML=title(6,t.contactTitle)+`<div class="contact-grid"><div><p>${t.contactBody}</p><ul>${t.opportunities.map(x=>`<li>${x}</li>`).join("")}</ul><a class="email" href="mailto:${D.email}">${D.email} ↗</a></div><form><label>${t.form[0]}<input name="name" required></label><label>${t.form[1]}<input name="org"></label><label>${t.form[2]}<input name="email" type="email" required></label><label>${t.form[3]}<input name="subject" required></label><label class="wide">${t.form[4]}<textarea name="message" rows="5" required></textarea></label><button class="wide" type="submit">${t.form[5]} ↗</button></form></div>`;
   const contact=t.contact;
   $("#contact").innerHTML=`<div class="contact-shell"><div class="contact-copy-panel"><p class="contact-eyebrow">06 /</p><h2>${contact.headline}</h2><p class="contact-message">${contact.message}</p><div class="contact-person"><span class="contact-person-icon" aria-hidden="true">◎</span><span class="contact-person-copy"><small>${contact.nameLabel}</small><strong>${contact.name}</strong><em>${contact.school}</em><b>${contact.identity}</b></span></div><div class="contact-methods"><div class="contact-method"><button class="contact-copy" type="button" data-copy-value="${contact.phone}" aria-label="${contact.copy} ${contact.phone}"><span><small>${contact.phoneLabel}</small><strong>${contact.phone}</strong></span><span class="contact-copy-action"><i class="contact-copy-icon">⧉</i>${contact.copy}</span></button><a href="tel:09042821181" aria-label="${contact.call}">↗</a></div><div class="contact-method"><button class="contact-copy" type="button" data-copy-value="${contact.email}" aria-label="${contact.copy} ${contact.email}"><span><small>${contact.emailLabel}</small><strong>${contact.email}</strong></span><span class="contact-copy-action"><i class="contact-copy-icon">⧉</i>${contact.copy}</span></button><a href="mailto:${contact.email}" aria-label="${contact.mail}">↗</a></div></div><div class="contact-status"><span>${contact.tokyo}</span><span>${contact.available}</span></div></div><div class="contact-character-stage"><div class="contact-glow" aria-hidden="true"></div><div class="contact-character-follow"><div class="contact-character-float"><img class="contact-character-image" src="images/contact-character.png" alt="${contact.imageAlt}" draggable="false"><div class="contact-character-placeholder"><span>YZ</span><p>${contact.imageFallback}</p></div></div></div></div></div><div class="contact-toast" role="status" aria-live="polite" aria-atomic="true"></div><form hidden aria-hidden="true"></form>`;
@@ -692,6 +1285,7 @@ function render(){
   setupInteractiveBadge();
   setupHeroForeground();
   setupHeroMessage(t);
+  setupChapterZoneRail();
   document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem("lang",lang);render()});
 }
 let badgeCleanup=null;
@@ -783,12 +1377,33 @@ if(localStorage.getItem("theme")==="light")document.body.classList.add("light");
 $(".menu").onclick=()=>{const open=$(".site-header").classList.toggle("open");$(".menu").setAttribute("aria-expanded",open)};
 document.addEventListener("click",e=>{if(e.target.matches("nav a"))$(".site-header").classList.remove("open")});
 const reel=document.querySelector(".sport-reel"),reelRows=[...document.querySelectorAll(".sport-reel-row")];let reelTick=false;
+function setupSportReelTitle(){
+  const title=reel?.querySelector(":scope>p"),gsapApi=window.gsap;
+  if(!title||!gsapApi)return;
+  const label=title.textContent.trim(),words=label.split(/\s+/);
+  title.setAttribute("aria-label",label);
+  title.innerHTML=`<span class="sport-reel-title-words" aria-hidden="true">${words.map(word=>`<span class="sport-reel-title-word">${word}</span>`).join(" ")}</span><i class="sport-reel-title-scan" aria-hidden="true"></i>`;
+  const wordElements=[...title.querySelectorAll(".sport-reel-title-word")],scan=title.querySelector(".sport-reel-title-scan"),reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduced){gsapApi.set(wordElements,{autoAlpha:1});return}
+  const timeline=gsapApi.timeline({paused:true})
+    .fromTo(wordElements,{autoAlpha:0,yPercent:78,rotationX:-62,transformOrigin:"50% 100%"},{autoAlpha:1,yPercent:0,rotationX:0,duration:.58,stagger:{amount:.46,from:"start"},ease:"power3.out",force3D:true},0)
+    .fromTo(scan,{autoAlpha:0,xPercent:-115},{autoAlpha:1,xPercent:115,duration:.72,ease:"power2.inOut"},.18)
+    .to(scan,{autoAlpha:0,duration:.12},.78)
+    .fromTo(wordElements,{textShadow:"0 0 0 rgba(255,47,190,0)"},{textShadow:"0 0 20px rgba(255,47,190,.34),0 0 34px rgba(45,132,255,.2)",duration:.28,stagger:.025,yoyo:true,repeat:1,ease:"sine.inOut"},.42);
+  let played=false;
+  const visibilityObserver=new IntersectionObserver(entries=>{
+    if(entries[0]?.isIntersecting&&!played){played=true;timeline.play()}
+  },{threshold:.28});
+  visibilityObserver.observe(title);
+  title.addEventListener("pointerenter",()=>{if(timeline.progress()===1)timeline.restart()});
+}
+setupSportReelTitle();
 function moveReel(){if(!reel)return;const offset=(scrollY-reel.offsetTop+innerHeight)*.22;reelRows.forEach(row=>row.style.transform=`translate3d(${row.dataset.direction==="right"?offset-260:-(offset-260)}px,0,0)`);reelTick=false}
 addEventListener("scroll",()=>{if(!reelTick){requestAnimationFrame(moveReel);reelTick=true}},{passive:true});moveReel();
 const heroBackgrounds=[...document.querySelectorAll(".hero-cinematic-bg")],heroBackgroundButtons=[...document.querySelectorAll(".hero-scene-switcher button")];let heroBackgroundIndex=0,heroBackgroundLocked=false;
 function changeHeroBackground(next){if(!heroBackgrounds.length||heroBackgroundLocked||next===heroBackgroundIndex)return;heroBackgroundLocked=true;heroBackgrounds[heroBackgroundIndex]?.classList.remove("active");heroBackgroundButtons[heroBackgroundIndex]?.classList.remove("active");heroBackgroundIndex=next;$(".hero").dataset.heroScene=next;heroBackgrounds[next]?.classList.add("active");heroBackgroundButtons[next]?.classList.add("active");setTimeout(()=>heroBackgroundLocked=false,1000)}
 heroBackgroundButtons.forEach((button,index)=>button.onclick=()=>changeHeroBackground(index));
 if(heroBackgrounds.length&&!matchMedia("(prefers-reduced-motion: reduce)").matches)setInterval(()=>changeHeroBackground((heroBackgroundIndex+1)%heroBackgrounds.length),6000);
-const observer=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("seen")),{threshold:.08});document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
+document.querySelectorAll(".reveal").forEach(x=>x.classList.add("seen"));
 const motionObserver=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("is-in-view",e.isIntersecting)),{rootMargin:"220px 0px"});document.querySelectorAll("main section,.sport-reel").forEach(s=>motionObserver.observe(s));
 const sectionObserver=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("current",a.getAttribute("href")==="#"+e.target.id))}}),{rootMargin:"-30% 0px -60%"});document.querySelectorAll("main section[id]").forEach(s=>sectionObserver.observe(s));

@@ -1,0 +1,17 @@
+node_modules/
+.pnpm-store/
+.DS_Store
+
+# Vite copies the whole public directory into this nested build output.
+# Only the tracked lanyard bundles/assets are published from dist.
+dist/lanyard/images/
+dist/lanyard/videos/
+
+# Local design and QA artifacts
+backups/
+tmp/
+work/
+outputs/
+qa-*.png
+*-comparison.jpg
+*-comparison.png
