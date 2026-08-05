@@ -1,0 +1,22 @@
+#contact .contact-copy-panel h2 {
+  width: min(100%, 460px);
+}
+
+#contact .contact-warp-text {
+  display: block;
+  width: 100%;
+  height: clamp(118px, 11vw, 154px);
+  overflow: hidden;
+  background: transparent;
+}
+
+#contact .contact-warp-text .warp-text {
+  min-height: 0;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  #contact .contact-warp-text {
+    height: 108px;
+  }
+}
